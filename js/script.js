@@ -519,54 +519,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function sendinForm(form) {
         form.addEventListener("submit", (e) => {
-            e.preventDefault();         
-
-            const formData = new FormData(form);
-
-            // Однако, созданный объект 
-            // подходит для формата php
-            // не подходит для формата json.
-            // Если нужен в итоге формат json,
-            // то делаем следующие манипуляции.
-            // Перебираем
-            // и преобразуем в обычный объект, а заетем...            
+            e.preventDefault();
+            const formData = new FormData(form);        
             const object = {};
             formData.forEach((value, key) => {
                 object[key] = value;
-            });
-
-            fetch("server.php", {
+            });            
+            fetch('server.php', {
                 // адресс отправки данных на сервер
                 method: "POST",
                 // вид действия
-                // headers: {
-                //     'Cotent-type': 'application/json'
-                // },
+                headers: {
+                    'Cotent-type': 'application/json'
+                },
                 // заголовки
-                body: formData
+                body: JSON.stringify(object)
                 // что отправляем на сервер
-            }).then((data) => {
-                data.text();                
-            }).then((data) => {  
-                console.log(data);             
+            })
+            .then((data) => data.text())
+            // .then((data) => {
+            //     return data.text()})
+            // более длинная запись вышестоящей
+            .then((data) => {  
+                console.log(data);                                        
                 // показать, какие данные ушли на сервер
                 // Изменяю оповещение пользователя
-                ShowThanksModal(statusMassege.ok);
+                ShowThanksModal(statusMassege.ok);               
             }).catch(() => {
             }).finally(() => {
                 form.reset();
             });
 
-            // этот обычный объект преобразуем формат,
-            // понимаемый сервером, а именно в json
-            // const json = JSON.stringify(object);
-            // Отправляем на сервер все данные преобразованные
-            // с помощью FormData() в объект, который 
-            // преобразован в обычный объект object,
-            // который преобразован в формат json
-            // request.send(json);
-            // Потом поочередно через 2 секунды
-            //  удаляю сообщение и закрываю форму 
             setTimeout(function () {
                 modal.classList.add("hide");
                 modal.classList.remove("show");
@@ -607,7 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const promise = new Promise((resolve, reject) => {
-        console.log("Первая операция");
+        // console.log("Первая операция");
         const product = {
             one: "film",
             two: "play"
@@ -617,22 +600,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     promise.then((product) => {
         return new Promise((resolve, reject) => {
-            console.log("Третья операция");
+            // console.log("Третья операция");
             product.name = "Oleg";
             resolve(product);
             reject(product);
         });
     }).then((product) => {
-        console.log(product);
+        // console.log(product);
         return product
     }).then((product) => {
-        console.log(product);
+        // console.log(product);
         return product;
     }).catch((product) => {
-        console.log(product);
+        // console.log(product);
         return product;
     }).finally((product) => {
-        console.log("Последняя операция");
+        // console.log("Последняя операция");
         return product;
     });
 
@@ -647,7 +630,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     Promise.all([test(1000), test(6000)]).then(() => {
-        console.log("Задача выполнена");
+        // console.log("Задача выполнена");
     });
 
 
