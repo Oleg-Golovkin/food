@@ -1,0 +1,61 @@
+/* .scroll {
+    position: fixed;
+    top: 145px;
+    z-index: 1;
+}
+
+.scroll_status {
+    display: block;
+    position: relative;    
+    height: 45px;
+    background-color: aqua;
+} */
+
+/* .header1 {
+    position: fixed;
+    top: 0;    
+    z-index: 1;
+    width: 100%;    
+  }
+  
+  .progress-bar {
+    height: 8px;
+    background: #4caf50;
+    width: 0%;
+  } */
+
+
+.header1 {
+  display: block;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  z-index: 1;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 8px;
+  background-color: green;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
