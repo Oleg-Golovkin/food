@@ -635,79 +635,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+    // ------------Урок 57 методы перебора массивов----------
+
+
+    // const name = ['Ivan', 'Saha', 'Evgenich']
+
+    // const newName =  name.filter(function(name) {
+    //     return name.length > 5
+    // })
+    // console.log(newName)
+
+    // const name = [4, 'SAha', 'EvgEnich'];
+
+    // const newName =  name.some(name => typeof(name) === "string" )
+    // console.log(newName);
+
+
+
 
 
 
 
 });
-
-
-
-
-
-
-
-
-
-// function sendinForm(form) {
-//     form.addEventListener("submit", (e) => {
-//         e.preventDefault();
-//         const request = new XMLHttpRequest();
-//         request.open("POST", "server.php");
-//         // Нужно собрать все значения input.value
-//         // в объект, чтобы потом закинуть все на сервер.
-//         // Чтобы не перебирать все значения input.value
-//         // используем объект FormData(), в который помещаем
-//         // форму for, в котором все введенные данные 
-//         // в input будут преобразованы в объект.
-
-
-//         const formData = new FormData(form);
-
-//         // Однако, созданный объект 
-//         // подходит для формата php
-//         // не подходит для формата json.
-//         // Если нужен в итоге формат json,
-//         // то делаем следующие манипуляции.
-//         // Перебираем
-//         // и преобразуем в обычный объект, а заетем...            
-//         const object = {};
-//         formData.forEach((value, key) => {
-//             object[key] = value;
-//         });
-
-//         // этот обычный объект преобразуем формат,
-//         // понимаемый сервером, а именно в json
-//         const json = JSON.stringify(object);
-//         // Отправляем на сервер все данные преобразованные
-//         // с помощью FormData() в объект, который 
-//         // преобразован в обычный объект object,
-//         // который преобразован в формат json
-//         request.send(json);
-
-//         console.log(json);
-
-
-
-
-//         request.addEventListener("load", () => {
-//             if (request.status == 200) {
-//                 console.log(request.response);
-//                 // показать, какие данные ушли на сервер
-//                 // Изменяю оповещение пользователя
-//             }
-//         });
-
-//         // После отправки данных стираю содержимое формы
-//         form.reset();
-
-//         ShowThanksModal(statusMassege.ok);
-
-//         // Потом поочередно через 2 секунды
-//         //  удаляю сообщение и закрываю форму 
-//         setTimeout(function () {
-//             modal.classList.add("hide");
-//             modal.classList.remove("show");
-//         }, 2000);
-//     });
-// }
