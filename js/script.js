@@ -645,10 +645,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // })
     // console.log(newName)
 
-    // const name = [4, 'SAha', 'EvgEnich'];
+    const name = [4, 4,];
 
-    // const newName =  name.some(name => typeof(name) === "string" )
-    // console.log(newName);
+    const newName =  name.reduce((sum, item) => sum + item, 3);
+    console.log(newName);
 
 
 
