@@ -650,10 +650,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const newName =  name.reduce((sum, item) => sum + item, 3);
     console.log(newName);
 
+    const obj = {
+        names: 'Ivan',
+        name: 1,
+        animal: 'vdvdfvd',
+        vsvsd: 2
+    }
 
+    console.log(Object.entries(obj)
+    .map(obj => obj[1])
+    .filter(obj => typeof(obj) === "number")
+    )
 
-
-
+// console.log(typeof(obj.name))
+    
 
 
 });
