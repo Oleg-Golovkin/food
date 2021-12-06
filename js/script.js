@@ -520,35 +520,34 @@ document.addEventListener("DOMContentLoaded", () => {
     function sendinForm(form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
-            const formData = new FormData(form);        
+            const formData = new FormData(form);
             const object = {};
             formData.forEach((value, key) => {
                 object[key] = value;
-            });            
-            fetch('server.php', {
-                // адресс отправки данных на сервер
-                method: "POST",
-                // вид действия
-                headers: {
-                    'Cotent-type': 'application/json'
-                },
-                // заголовки
-                body: JSON.stringify(object)
-                // что отправляем на сервер
-            })
-            .then((data) => data.text())
-            // .then((data) => {
-            //     return data.text()})
-            // более длинная запись вышестоящей
-            .then((data) => {  
-                console.log(data);                                        
-                // показать, какие данные ушли на сервер
-                // Изменяю оповещение пользователя
-                ShowThanksModal(statusMassege.ok);               
-            }).catch(() => {
-            }).finally(() => {
-                form.reset();
             });
+            fetch('server.php', {
+                    // адресс отправки данных на сервер
+                    method: "POST",
+                    // вид действия
+                    headers: {
+                        'Cotent-type': 'application/json'
+                    },
+                    // заголовки
+                    body: JSON.stringify(object)
+                    // что отправляем на сервер
+                })
+                .then((data) => data.text())
+                // .then((data) => {
+                //     return data.text()})
+                // более длинная запись вышестоящей
+                .then((data) => {
+                    console.log(data);
+                    // показать, какие данные ушли на сервер
+                    // Изменяю оповещение пользователя
+                    ShowThanksModal(statusMassege.ok);
+                }).catch(() => {}).finally(() => {
+                    form.reset();
+                });
 
             setTimeout(function () {
                 modal.classList.add("hide");
@@ -645,10 +644,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // })
     // console.log(newName)
 
-    const name = [4, 4,];
+    const name = [4, 4, ];
 
-    const newName =  name.reduce((sum, item) => sum + item, 3);
-    console.log(newName);
+    const newName = name.reduce((sum, item) => sum + item, 3);
+    // console.log(newName);
 
     const obj = {
         names: 'Ivan',
@@ -657,13 +656,17 @@ document.addEventListener("DOMContentLoaded", () => {
         vsvsd: 2
     }
 
-    console.log(Object.entries(obj)
-    .map(obj => obj[1])
-    .filter(obj => typeof(obj) === "number")
-    )
+    // console.log(Object.entries(obj)
+    //     .map(obj => obj[1])
+    //     .filter(obj => typeof (obj) === "number")
+    // )
 
-// console.log(typeof(obj.name))
-    
+    // console.log(typeof(obj.name))
+    fetch("http://localhost:3000/menu") 
+        .then(data => data.json())
+        .then(res => console.log(res));
+
+
 
 
 });
