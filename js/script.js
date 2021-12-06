@@ -556,6 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
             
+            
 
             setTimeout(function () {
                 modal.classList.add("hide");
