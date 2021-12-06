@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     // Tab
     const tabHeaderItems = document.querySelector(".tabheader__items"),
@@ -517,37 +519,43 @@ document.addEventListener("DOMContentLoaded", () => {
         ok: "Данные отправлены. Вскоре мы с Вами свяжемся!"
     };
 
+    const postForm = async (url, data) => {
+        let res = await fetch(url, {
+            method: "POST",
+            // вид действия
+            headers: {
+                'Cotent-type': 'application/json'
+            },
+            // заголовки
+            body: data
+            // что отправляем на сервер
+        });
+        return await res.json();
+        // здесь возвращается ответ сервера и Promise
+    };
+
     function sendinForm(form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = new FormData(form);
+            
             const object = {};
             formData.forEach((value, key) => {
                 object[key] = value;
             });
-            fetch('server.php', {
-                    // адресс отправки данных на сервер
-                    method: "POST",
-                    // вид действия
-                    headers: {
-                        'Cotent-type': 'application/json'
-                    },
-                    // заголовки
-                    body: JSON.stringify(object)
-                    // что отправляем на сервер
-                })
-                .then((data) => data.text())
-                // .then((data) => {
-                //     return data.text()})
-                // более длинная запись вышестоящей
+
+            postForm('http://localhost:3000/requests', JSON.stringify(object))
                 .then((data) => {
                     console.log(data);
                     // показать, какие данные ушли на сервер
                     // Изменяю оповещение пользователя
                     ShowThanksModal(statusMassege.ok);
-                }).catch(() => {}).finally(() => {
+                }).catch(() => {})
+                .finally(() => {
                     form.reset();
                 });
+
+            
 
             setTimeout(function () {
                 modal.classList.add("hide");
@@ -662,9 +670,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // )
 
     // console.log(typeof(obj.name))
-    fetch("http://localhost:3000/menu") 
-        .then(data => data.json())
-        .then(res => console.log(res));
+    // fetch("http://localhost:3000/menu") 
+    //     .then(data => data.json())
+    //     .then(res => console.log(res));
 
 
 
