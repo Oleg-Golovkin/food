@@ -509,8 +509,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const forms = document.querySelectorAll("form");
 
-    forms.forEach(form => {
-        sendinForm(form);
+    forms.forEach(item => {
+        sendinForm(item);
     });
 
     const statusMassege = {
@@ -520,43 +520,41 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const postForm = async (url, data) => {
-        let res = await fetch(url, {
+            let res = await fetch(url, {
             method: "POST",
-            // вид действия
             headers: {
-                'Cotent-type': 'application/json'
-            },
-            // заголовки
+                'Content-Type': 'application/json'
+            },            
             body: data
-            // что отправляем на сервер
         });
         return await res.json();
-        // здесь возвращается ответ сервера и Promise
     };
-
+    
     function sendinForm(form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = new FormData(form);
-            
+
             const object = {};
             formData.forEach((value, key) => {
                 object[key] = value;
             });
-
-            postForm('http://localhost:3000/requests', JSON.stringify(object))
-                .then((data) => {
+            postForm('http://localhost:3000/requests', JSON.stringify(object))                
+                .then(data => {
                     console.log(data);
                     // показать, какие данные ушли на сервер
                     // Изменяю оповещение пользователя
                     ShowThanksModal(statusMassege.ok);
-                }).catch(() => {})
+                }).catch(() => {
+                    ShowThanksModal(statusMassege.error);
+                })
                 .finally(() => {
                     form.reset();
-                });
+                });     
 
-            
-            
+           
+
+
 
             setTimeout(function () {
                 modal.classList.add("hide");
@@ -583,7 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         const img = div.querySelector("img");
         img.style.cssText = `display: block;
-        margin: 10px auto;`
+        margin: 10px auto;`;
 
         setTimeout(function () {
             modal.classList.add("hide");
@@ -663,19 +661,24 @@ document.addEventListener("DOMContentLoaded", () => {
         name: 1,
         animal: 'vdvdfvd',
         vsvsd: 2
-    }
+    };
 
     // console.log(Object.entries(obj)
     //     .map(obj => obj[1])
     //     .filter(obj => typeof (obj) === "number")
     // )
 
-    // console.log(typeof(obj.name))
-    // fetch("http://localhost:3000/menu") 
-    //     .then(data => data.json())
-    //     .then(res => console.log(res));
-
-
+    
 
 
 });
+
+
+
+
+
+
+
+
+
+
