@@ -386,15 +386,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     class CreatMenuItem {
-        constructor(parentSelector, img, h3, menuItemDescr, menuItemCost, menuItemTotalSpan, menuItemTotalDay, ...selector) {
+        constructor(parentSelector, img, h3, menuItemDescr, menuItemTotalSpan, ...selector) {
             this.img = img;
             this.h3 = h3;
             this.menuItemDescr = menuItemDescr;
-            this.menuItemCost = menuItemCost;
+            // this.menuItemCost = menuItemCost;
             this.menuItemTotalSpan = menuItemTotalSpan;
             this.selector = selector;
             this.parent = document.querySelector(parentSelector);
-            this.menuItemTotalDay = menuItemTotalDay;
         }
 
 
@@ -416,12 +415,34 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="menu__item-descr">${this.menuItemDescr}</div>
                     <div class="menu__item-divider"></div>
                     <div class="menu__item-price">
-                        <div class="menu__item-cost">${this.menuItemCost}:</div>
-                        <div class="menu__item-total"><span>${this.menuItemTotalSpan}</span> ${this.menuItemTotalDay}</div>
+                        <div class="menu__item-cost">Цена:</div>
+                        <div class="menu__item-total"><span>${this.menuItemTotalSpan}</span>гр/день</div>
                     </div>`;
             this.parent.append(element);
         }
     }
+
+    // const getResurses = async (url) => {
+    //     let res = await fetch(url);        
+    // };
+    // getResurses("http://localhost:3000/menu");
+
+    console.log();
+    // fetch("http://localhost:3000/menu")
+    //     .then(function (data) {
+    //         return data.json();
+
+    //     })
+    //     // .then(function (res) {
+    //     //     console.log(res);
+    //     // });
+
+    //     .then(async function (res) {
+    //         return await new CreatMenuItem(Object.values(res[0]).reduce((sum, item) => `${sum} ${item},`)).NewMenuItem();
+
+    //     });
+
+
 
     function NewMenu() {
 
@@ -432,9 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих
                     овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной
                     ценой и высоким качеством!`,
-            'Цена',
-            '229',
-            "грн/день"
+            '229'
         ).NewMenuItem();
 
 
@@ -445,9 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `В меню “Премиум” мы используем не только красивый дизайн упаковки, но
                     и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода
                     в ресторан!`,
-            'Цена',
             '550',
-            'грн/день',
             "menu__item"
         ).NewMenuItem();
 
@@ -458,9 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие
                     продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное
                     количество белков за счет тофу и импортных вегетарианских стейков.`,
-            'Цена',
-            '430',
-            'грн/день'
+            '430'
         ).NewMenuItem();
 
     }
@@ -507,28 +522,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const forms = document.querySelectorAll("form");
 
-    forms.forEach(item => {
-        sendinForm(item);
-    });
+
 
     const statusMassege = {
         error: "Ошибка",
         load: "Идет загрузка",
         ok: "Данные отправлены. Вскоре мы с Вами свяжемся!"
     };
-
-    // const postForm = async (url, data) => {
-    //         let res = await fetch(url, {
-    //         method: "POST",
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },            
-    //         body: data
-    //     });
-    //     return await res.json();
-    // };
-
-
 
     const postForm = async (url, request) => {
         let res = await fetch(url, {
@@ -546,39 +546,35 @@ document.addEventListener("DOMContentLoaded", () => {
         //  этот ответ
     };
 
+    forms.forEach(item => {
+        sendinForm(item);
+    });
 
     function sendinForm(form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = new FormData(form);
-            
+            // Вместо перебора
+            // const object = {};
+            // formData.forEach((value, key) => {
+            //     object[key] = value;
+            // });
 
-            const object = {};
-            formData.forEach((value, key) => {
-                console.log(key);               
-                object[key] = value;
-            });
+            // Делаем преобразование
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-            console.log(object);
-
-            postForm('http://localhost:3000/requests', JSON.stringify(object))                
+            postForm("http://localhost:3000/requests", json)
                 .then(data => {
                     console.log(data);
-                    // показать, какие данные ушли на сервер
-                    // Изменяю оповещение пользователя
                     ShowThanksModal(statusMassege.ok);
-                }).catch(() => {
+                })
+                .catch(() => {
                     ShowThanksModal(statusMassege.error);
                 })
                 .finally(() => {
                     form.reset();
-                });             
+                });
 
-
-            setTimeout(function () {
-                modal.classList.add("hide");
-                modal.classList.remove("show");
-            }, 2000);
         });
     }
 
