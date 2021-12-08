@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
     // Tab
     const tabHeaderItems = document.querySelector(".tabheader__items"),
@@ -519,26 +517,50 @@ document.addEventListener("DOMContentLoaded", () => {
         ok: "Данные отправлены. Вскоре мы с Вами свяжемся!"
     };
 
-    const postForm = async (url, data) => {
-            let res = await fetch(url, {
+    // const postForm = async (url, data) => {
+    //         let res = await fetch(url, {
+    //         method: "POST",
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },            
+    //         body: data
+    //     });
+    //     return await res.json();
+    // };
+
+
+
+    const postForm = async (url, request) => {
+        let res = await fetch(url, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-            },            
-            body: data
+            },
+            body: request
         });
         return await res.json();
+        // возвращаем наверх (функцию pastForm)
+        //  результат ответа (команда res.json()) 
+        // запроса на сервер,
+        // чтобы в дальншейшем обрабатывать через Promise
+        //  этот ответ
     };
-    
+
+
     function sendinForm(form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = new FormData(form);
+            
 
             const object = {};
             formData.forEach((value, key) => {
+                console.log(key);               
                 object[key] = value;
             });
+
+            console.log(object);
+
             postForm('http://localhost:3000/requests', JSON.stringify(object))                
                 .then(data => {
                     console.log(data);
@@ -550,10 +572,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .finally(() => {
                     form.reset();
-                });     
-
-           
-
+                });             
 
 
             setTimeout(function () {
@@ -668,17 +687,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //     .filter(obj => typeof (obj) === "number")
     // )
 
-    
+
 
 
 });
-
-
-
-
-
-
-
-
-
-
