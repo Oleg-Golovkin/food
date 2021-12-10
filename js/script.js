@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Slider
+    //----------------------------------Слайдер-------------------------//
     const wrapper = document.querySelector(".offer__slider-wrapper"),
         slide = document.querySelectorAll(".offer__slide"),
         sliderCounter = document.querySelector(".offer__slider-counter"),
@@ -386,14 +386,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     class CreatMenuItem {
-        constructor(parentSelector, img, h3, menuItemDescr, menuItemTotalSpan, ...selector) {
+        constructor(parentSelector, img, altimg, h3, menuItemDescr, menuItemTotalSpan, ...selector) {
             this.img = img;
             this.h3 = h3;
             this.menuItemDescr = menuItemDescr;
             // this.menuItemCost = menuItemCost;
             this.menuItemTotalSpan = menuItemTotalSpan;
             this.selector = selector;
-            this.parent = document.querySelector(parentSelector);
+            this.parent = document.querySelector(parentSelector),
+            this.altimg = altimg;
         }
 
 
@@ -410,7 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             element.innerHTML +=
-                `   <img src= ${this.img} alt="vegy">
+                `   <img src= ${this.img} alt=${this.altimg}>
                     <h3 class="menu__item-subtitle">${this.h3}</h3>
                     <div class="menu__item-descr">${this.menuItemDescr}</div>
                     <div class="menu__item-divider"></div>
@@ -422,69 +423,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // const getResurses = async (url) => {
-    //     let res = await fetch(url);        
-    // };
-    // getResurses("http://localhost:3000/menu");
-
-    console.log();
-    // fetch("http://localhost:3000/menu")
-    //     .then(function (data) {
-    //         return data.json();
-
-    //     })
-    //     // .then(function (res) {
-    //     //     console.log(res);
-    //     // });
-
-    //     .then(async function (res) {
-    //         return await new CreatMenuItem(Object.values(res[0]).reduce((sum, item) => `${sum} ${item},`)).NewMenuItem();
-
-    //     });
-
-
-
-    function NewMenu() {
-
-        new CreatMenuItem(
-            ".menu .container",
-            "img/tabs/vegy.jpg",
-            'Меню "Фитнес"',
-            `Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих
-                    овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной
-                    ценой и высоким качеством!`,
-            '229'
-        ).NewMenuItem();
-
-
-        new CreatMenuItem(
-            ".menu .container",
-            "img/tabs/elite.jpg",
-            'Меню “Премиум”',
-            `В меню “Премиум” мы используем не только красивый дизайн упаковки, но
-                    и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода
-                    в ресторан!`,
-            '550',
-            "menu__item"
-        ).NewMenuItem();
-
-        new CreatMenuItem(
-            ".menu .container",
-            "img/tabs/post.jpg",
-            'Меню "Постное"',
-            `Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие
-                    продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное
-                    количество белков за счет тофу и импортных вегетарианских стейков.`,
-            '430'
-        ).NewMenuItem();
-
-    }
-
-    NewMenu();
-
-
-
-
+    fetch("http://localhost:3000/menu")
+        .then(data => data.json())
+        .then(res => {
+            res.forEach(item => {
+                new CreatMenuItem(".menu .container", item.img, item.altimg, item.title, item.descr, item.price).NewMenuItem();
+            });
+        });
 
     //---------- Урок № 51 JSON формат передачи данных. Глубокое клонирование-------//
 
