@@ -42,28 +42,68 @@ document.addEventListener("DOMContentLoaded", () => {
         offerSlider = document.querySelector(".offer__slider"),
         sliderCounter = document.querySelector(".offer__slider-counter"),
         current = document.querySelector("#current"),
+        nextSlide = document.querySelector(".offer__slider-next"),
+        prevSlide = document.querySelector(".offer__slider-prev"),
         total = document.querySelector("#total");
 
     let indexSlide = 1;
 
-    scrollSlide(indexSlide);
+    // 1. Слайд по индексом 0
+    // показывается сразу по умолчанию
+    showSlide(indexSlide);
+    total.textContent = `0${slide.length}`;
 
-    function scrollSlide(n) {
+     // 2. При нажатии вперед в функции plusSlide 
+    // к indexSlide прибавляется либо отнимается 1
+    nextSlide.addEventListener('click', () => {
+        showSlide(indexSlide += 1);       
+    });
+
+    prevSlide.addEventListener('click', () => {
+        showSlide(indexSlide += -1);
+        console.log(indexSlide);
+    });
+    // 3. showSlide запускается с цифрой 2 (то, 
+    // что получилось в nextSlide)
+    // Не записывать в функцию сам indexSlide, 
+    // поскольку по какой-то причине к let не
+    // присваивается новое значине при прокуртке 
+    // по кругу.
+    function showSlide(n) {
+        // 3.1 Прокрутка слайдов по кругу
         if (n > slide.length) {
-            indexSlide = 1;
+            //  Если то, что получилось в plusSlide
+            // больше общего количества слайлов, то
+            // возвращаемся к первому слайду            
+            indexSlide = 1;            
         }
-
+        // 3.1 Наоборот 
         if (n < 1) {
             indexSlide = slide.length;
         }
         slide.forEach(item => {
-            item.style.display = "none"; /* удаляем весь контент */
-        });
-
-        slide[indexSlide - 1].style.display = "block"; /* добавляем один из по порядку */
+            item.style.display = "none";
+            /* удаляем весь контент */
+        }); 
+         
+        // Если цифры до 10, то они показываются
+        // на счетчике с формате 01
+        if(n < 10){
+            current.textContent = `${0}${indexSlide}`;
+        } else {
+            current.textContent = indexSlide; 
+        }; 
+                    
+        slide[indexSlide - 1].style.display = "block";
+        /* добавляем один из по порядку */
+        // -1, поскольку первый слайд под
+        // индексом 0      
         
+         console.log(indexSlide);  
     }
-    
+
+   
+
 
 
 
