@@ -39,6 +39,17 @@
   background-color: green;
 }
 
+.offer__slider-wrapper {
+  overflow: hidden
+}
+.offer__slider-wrapper-2 {
+  display: flex;
+}
+
+
+
+
+
 
 
 

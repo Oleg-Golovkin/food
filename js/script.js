@@ -44,84 +44,136 @@ document.addEventListener("DOMContentLoaded", () => {
         current = document.querySelector("#current"),
         nextSlide = document.querySelector(".offer__slider-next"),
         prevSlide = document.querySelector(".offer__slider-prev"),
-        total = document.querySelector("#total");
+        total = document.querySelector("#total"),
+        sliderWrapper = document.querySelector(".offer__slider-wrapper-2");
 
-    let indexSlide = 1;
+    let slideIndex = 0;
 
-    // 1. Слайд c индексом 0
-    // показывается сразу по умолчанию
-    // см. 3.3. Остальные пунты в п 3 применяться
-    // не будут
-    showSlide(indexSlide);
-    total.textContent = `0${slide.length}`;
+    sliderWrapper.style.cssText = `width: ${slide.length * 100}%;`;
+    showSlide(slideIndex);
 
+    if (slide.length < 10) {
+        total.textContent = `${0}${slide.length}`;
+    } else {
+        total.textContent = slide.length;
+    };
 
-    // 2. При нажатии вперед 
-    // к indexSlide прибавляется либо отнимается 1
     nextSlide.addEventListener('click', () => {
-        
-        showSlide(++indexSlide);
-        console.log(indexSlide);
-
+        showSlide(slideIndex += -1);
     });
 
     prevSlide.addEventListener('click', () => {
-        showSlide(--indexSlide);
-        console.log(indexSlide);
+        showSlide(slideIndex += 1);
     });
-    // 3. showSlide запускается с цифрой 2 (то, 
-    // что получилось в nextSlide)
-    // Не записывать в функцию сам indexSlide, 
-    // поскольку по какой-то причине к let не
-    // присваивается новое значине при прокуртке 
-    // по кругу.
+
+
     function showSlide(n) {
-        // 3.1 Прокрутка слайдов по кругу
-        // при достижении верхнего слайда
-        if (n > slide.length) {
-            //  Если то, что получилось в plusSlide
-            // больше общего количества слайлов, то
-            // возвращаемся к первому слайду            
-            indexSlide = 1;
+        if (n == slide.length * -1) {
+            slideIndex = 0
         }
-        // 3.1 При достижении ниже
-        // перого слайда
-        if (n < 1) {
-            indexSlide = slide.length;
+        if (n > 0) {
+            slideIndex = (slide.length - 1) * -1
         }
 
-        // 3.2 Удаляем все слайды
-        slide.forEach(item => {
-            item.style.display = "none";
-
-        });
-
-        // Если цифры до 10, то они показываются
-        // на счетчике с формате 01
-        if (n < 10) {
-            current.textContent = `${0}${indexSlide}`;
+        if (slideIndex > - 9) {
+            current.textContent = `${0}${(slideIndex * -1) + 1}`;
         } else {
-            current.textContent = indexSlide;
+            current.textContent = (slideIndex * -1)+1;
         };
 
-        // 3.3. Показываем слайд с соответствующим 
-        // индексом. По умолчанию 1
-        console.log(n);
-        console.log(indexSlide);
-
-        slide[indexSlide - 1].style.display = "block";
-        /* добавляем один из по порядку */
-        // -1, поскольку первый слайд под
-        // индексом 0      
+        slide.forEach((slide) => {
+            slide.style.cssText = `transition: 0.5s all; transform: translate(${slideIndex * 100}%);`;
+        });
     }
 
 
+    // if (indexSlide > slide.length - 1) {
+    //     translateIndex = 0
+    //     indexSlide = 0;
+    // }
+    // translateIndex -= 100;
+    // ++indexSlide;
+    // slide.forEach((slide) => {
+    //     slide.style.cssText = ``;
+
+    // });
+    // slide[indexSlide].style.cssText = `transform: translate(${translateIndex}%);`;
 
 
+    //     if (indexSlide < 0) {
+    //         translateIndex = -300;
+    //         indexSlide = 3;
+    //     }
+    //     translateIndex += 100;
+    //     --indexSlide
+    //     slide.forEach((slide) => {
+    //         slide.style.cssText = ``;
+    //     });
+    //     slide[indexSlide].style.cssText = `transform: translate(${translateIndex}%);`
+
+    // // 1. Слайд c индексом 0
+    // // показывается сразу по умолчанию
+    // // см. 3.3. Остальные пунты в п 3 применяться
+    // // не будут
+    // showSlide(indexSlide);
+    // total.textContent = `0${slide.length}`;
 
 
+    // // 2. При нажатии вперед 
+    // // к indexSlide прибавляется либо отнимается 1
+    // nextSlide.addEventListener('click', () => {
 
+    //     showSlide(++indexSlide);
+    //     console.log(indexSlide);
 
+    // });
+
+    // prevSlide.addEventListener('click', () => {
+    //     showSlide(--indexSlide);
+    //     console.log(indexSlide);
+    // });
+    // // 3. showSlide запускается с цифрой 2 (то, 
+    // // что получилось в nextSlide)
+    // // Не записывать в функцию сам indexSlide, 
+    // // поскольку по какой-то причине к let не
+    // // присваивается новое значине при прокуртке 
+    // // по кругу.
+    // function showSlide(n) {
+    //     // 3.1 Прокрутка слайдов по кругу
+    //     // при достижении верхнего слайда
+    //     if (n > slide.length) {
+    //         //  Если то, что получилось в plusSlide
+    //         // больше общего количества слайлов, то
+    //         // возвращаемся к первому слайду            
+    //         indexSlide = 1;
+    //     }
+    //     // 3.1 При достижении ниже
+    //     // перого слайда
+    //     if (n < 1) {
+    //         indexSlide = slide.length;
+    //     }
+
+    //     // 3.2 Удаляем все слайды
+    //     slide.forEach(item => {
+    //         item.style.display = "none";
+
+    //     });
+
+    //     // Если цифры до 10, то они показываются
+    //     // на счетчике с формате 01
+    //     if (n < 10) {
+    //         current.textContent = `${0}${indexSlide}`;
+    //     } else {
+    //         current.textContent = indexSlide;
+    //     };
+
+    //     // 3.3. Показываем слайд с соответствующим 
+    //     // индексом. По умолчанию 1
+    //     slide[indexSlide - 1].style.display = "block";
+    //     /* добавляем один из по порядку */
+    //     // -1, поскольку первый слайд под
+    //     // индексом 0      
+    // }
 
 
 
@@ -207,13 +259,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const t = Date.parse(endtime) - Date.parse(new Date()),
             days = Math.floor(t / 1000 / 60 / 60 / 24),
             /* получаем количество дней до 
-        //                    назначенной даты. То, что в скобках, это количество милисекунд в сутках.
-        //                    То есть мы округляем милисекунды до секунд (делим на 1000), до менут (на 60),
-        //                    до часов (на 60) до суток (на 24)
-        //                    Нельзя было сразу 18 400 000 написать? 
-        //                    Через указанный метод округляем получившееся часы (поскольку
-        //                    в результате выражения может получится дробное число), получившееся из
-        //                    произведения желаемой даты и даты текущей). */
+            //                    назначенной даты. То, что в скобках, это количество милисекунд в сутках.
+            //                    То есть мы округляем милисекунды до секунд (делим на 1000), до менут (на 60),
+            //                    до часов (на 60) до суток (на 24)
+            //                    Нельзя было сразу 18 400 000 написать? 
+            //                    Через указанный метод округляем получившееся часы (поскольку
+            //                    в результате выражения может получится дробное число), получившееся из
+            //                    произведения желаемой даты и даты текущей). */
             hours = Math.floor((t / 1000 / 60 / 60) % 24),
             minutes = Math.floor((t / 1000 / 60) % 60),
             seconds = Math.floor((t / 1000) % 60);
@@ -487,51 +539,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    class CreatMenuItem {
-        constructor(parentSelector, img, altimg, h3, menuItemDescr, menuItemTotalSpan, ...selector) {
-            this.img = img;
-            this.h3 = h3;
-            this.menuItemDescr = menuItemDescr;
-            // this.menuItemCost = menuItemCost;
-            this.menuItemTotalSpan = menuItemTotalSpan;
-            this.selector = selector;
-            this.parent = document.querySelector(parentSelector),
-                this.altimg = altimg;
-        }
+    // class CreatMenuItem {
+    //     constructor(parentSelector, img, altimg, h3, menuItemDescr, menuItemTotalSpan, ...selector) {
+    //         this.img = img;
+    //         this.h3 = h3;
+    //         this.menuItemDescr = menuItemDescr;
+    //         // this.menuItemCost = menuItemCost;
+    //         this.menuItemTotalSpan = menuItemTotalSpan;
+    //         this.selector = selector;
+    //         this.parent = document.querySelector(parentSelector),
+    //             this.altimg = altimg;
+    //     }
 
 
-        NewMenuItem() {
-            const element = document.createElement('div');
-            if (this.selector.length == 0) {
-                this.selector = "menu__item";
-                element.classList.add(this.selector);
-            } else {
-                this.selector.forEach(selector => {
-                    element.classList.add(this.selector);
-                });
-            }
+    //     NewMenuItem() {
+    //         const element = document.createElement('div');
+    //         if (this.selector.length == 0) {
+    //             this.selector = "menu__item";
+    //             element.classList.add(this.selector);
+    //         } else {
+    //             this.selector.forEach(selector => {
+    //                 element.classList.add(this.selector);
+    //             });
+    //         }
 
 
-            element.innerHTML +=
-                `   <img src= ${this.img} alt=${this.altimg}>
-                    <h3 class="menu__item-subtitle">${this.h3}</h3>
-                    <div class="menu__item-descr">${this.menuItemDescr}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${this.menuItemTotalSpan}</span>гр/день</div>
-                    </div>`;
-            this.parent.append(element);
-        }
-    }
+    //         element.innerHTML +=
+    //             `   <img src= ${this.img} alt=${this.altimg}>
+    //                 <h3 class="menu__item-subtitle">${this.h3}</h3>
+    //                 <div class="menu__item-descr">${this.menuItemDescr}</div>
+    //                 <div class="menu__item-divider"></div>
+    //                 <div class="menu__item-price">
+    //                     <div class="menu__item-cost">Цена:</div>
+    //                     <div class="menu__item-total"><span>${this.menuItemTotalSpan}</span>гр/день</div>
+    //                 </div>`;
+    //         this.parent.append(element);
+    //     }
+    // }
 
-    fetch("http://localhost:3000/menu")
-        .then(data => data.json())
-        .then(res => {
-            res.forEach(item => {
-                new CreatMenuItem(".menu .container", item.img, item.altimg, item.title, item.descr, item.price).NewMenuItem();
-            });
-        });
+    // fetch("http://localhost:3000/menu")
+    //     .then(data => data.json())
+    //     .then(res => {
+    //         res.forEach(item => {
+    //             new CreatMenuItem(".menu .container", item.img, item.altimg, item.title, item.descr, item.price).NewMenuItem();
+    //         });
+    //     });
 
     //---------- Урок № 51 JSON формат передачи данных. Глубокое клонирование-------//
 
