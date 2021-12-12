@@ -48,19 +48,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let indexSlide = 1;
 
-    // 1. Слайд по индексом 0
+    // 1. Слайд c индексом 0
     // показывается сразу по умолчанию
+    // см. 3.3. Остальные пунты в п 3 применяться
+    // не будут
     showSlide(indexSlide);
     total.textContent = `0${slide.length}`;
 
-     // 2. При нажатии вперед в функции plusSlide 
+
+    // 2. При нажатии вперед 
     // к indexSlide прибавляется либо отнимается 1
     nextSlide.addEventListener('click', () => {
-        showSlide(indexSlide += 1);       
+        
+        showSlide(++indexSlide);
+        console.log(indexSlide);
+
     });
 
     prevSlide.addEventListener('click', () => {
-        showSlide(indexSlide += -1);
+        showSlide(--indexSlide);
         console.log(indexSlide);
     });
     // 3. showSlide запускается с цифрой 2 (то, 
@@ -71,38 +77,45 @@ document.addEventListener("DOMContentLoaded", () => {
     // по кругу.
     function showSlide(n) {
         // 3.1 Прокрутка слайдов по кругу
+        // при достижении верхнего слайда
         if (n > slide.length) {
             //  Если то, что получилось в plusSlide
             // больше общего количества слайлов, то
             // возвращаемся к первому слайду            
-            indexSlide = 1;            
+            indexSlide = 1;
         }
-        // 3.1 Наоборот 
+        // 3.1 При достижении ниже
+        // перого слайда
         if (n < 1) {
             indexSlide = slide.length;
         }
+
+        // 3.2 Удаляем все слайды
         slide.forEach(item => {
             item.style.display = "none";
-            /* удаляем весь контент */
-        }); 
-         
+
+        });
+
         // Если цифры до 10, то они показываются
         // на счетчике с формате 01
-        if(n < 10){
+        if (n < 10) {
             current.textContent = `${0}${indexSlide}`;
         } else {
-            current.textContent = indexSlide; 
-        }; 
-                    
+            current.textContent = indexSlide;
+        };
+
+        // 3.3. Показываем слайд с соответствующим 
+        // индексом. По умолчанию 1
+        console.log(n);
+        console.log(indexSlide);
+
         slide[indexSlide - 1].style.display = "block";
         /* добавляем один из по порядку */
         // -1, поскольку первый слайд под
         // индексом 0      
-        
-         console.log(indexSlide);  
     }
 
-   
+
 
 
 
