@@ -39,77 +39,112 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //----------------------------------Слайдер-------------------------//
     const slide = document.querySelectorAll(".offer__slide"),
-        offerSlider = document.querySelector(".offer__slider"),
-        sliderCounter = document.querySelector(".offer__slider-counter"),
-        current = document.querySelector("#current"),
         nextSlide = document.querySelector(".offer__slider-next"),
         prevSlide = document.querySelector(".offer__slider-prev"),
-        total = document.querySelector("#total"),
-        sliderWrapper = document.querySelector(".offer__slider-wrapper-2");
+        sliderWrapper2 = document.querySelector(".offer__slider-wrapper-2"),
+        sliderWrapper = document.querySelector(".offer__slider-wrapper"),
+        width = window.getComputedStyle(sliderWrapper).width;
 
-    let slideIndex = 0;
+    let offset = 0,
+        slideIndex = 1;
 
-    sliderWrapper.style.cssText = `width: ${slide.length * 100}%;`;
-    showSlide(slideIndex);
+    sliderWrapper2.style.width = `${slide.length * 100}%`;
+    sliderWrapper2.style.transition = '0.5s all';
 
     if (slide.length < 10) {
-        total.textContent = `${0}${slide.length}`;
+        total.textContent = `0${slide.length}`;
+        current.textContent = `0${slideIndex}`;
     } else {
         total.textContent = slide.length;
-    };
+        current.textContent = slideIndex;
+    }
 
     nextSlide.addEventListener('click', () => {
-        showSlide(slideIndex += -1);
+        if (offset == (+width.slice(0, width.length - 2) * (slide.length - 1))) {
+            offset = 0;
+        } else {
+            offset += +width.slice(0, width.length - 2);
+        }
+        sliderWrapper2.style.transform = `translateX(-${offset}px)`;
+
+        if (slideIndex == slide.length) {
+            slideIndex = 1;
+        } else {
+            slideIndex++;
+        }
+
+        if (slide.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
     });
 
     prevSlide.addEventListener('click', () => {
-        showSlide(slideIndex += 1);
+        if (offset == 0) {
+            offset = +width.slice(0, width.length - 2) * (slide.length - 1);
+        } else {
+            offset -= +width.slice(0, width.length - 2);
+        }
+        sliderWrapper2.style.transform = `translateX(-${offset}px)`;
+
+        if (slideIndex == 1) {
+            slideIndex = slide.length;
+        } else {
+            slideIndex--;
+        }
+
+        if (slide.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
     });
 
 
-    function showSlide(n) {
-        if (n == slide.length * -1) {
-            slideIndex = 0
-        }
-        if (n > 0) {
-            slideIndex = (slide.length - 1) * -1
-        }
-
-        if (slideIndex > - 9) {
-            current.textContent = `${0}${(slideIndex * -1) + 1}`;
-        } else {
-            current.textContent = (slideIndex * -1)+1;
-        };
-
-        slide.forEach((slide) => {
-            slide.style.cssText = `transition: 0.5s all; transform: translate(${slideIndex * 100}%);`;
-        });
-    }
 
 
-    // if (indexSlide > slide.length - 1) {
-    //     translateIndex = 0
-    //     indexSlide = 0;
-    // }
-    // translateIndex -= 100;
-    // ++indexSlide;
-    // slide.forEach((slide) => {
-    //     slide.style.cssText = ``;
 
+    // Мой вариант прокрутки слайдера. Слайдер появляется плавно
+    // let slideIndex = 0;
+
+    // sliderWrapper.style.cssText = `width: ${slide.length * 100}%;`;
+    // showSlide(slideIndex)
+    // if (slide.length < 10) {
+    //     total.textContent = `${0}${slide.length}`;
+    // } else {
+    //     total.textContent = slide.length;
+    // };
+
+    // nextSlide.addEventListener('click', () => {
+    //     showSlide(slideIndex += -1);
     // });
-    // slide[indexSlide].style.cssText = `transform: translate(${translateIndex}%);`;
+
+    // prevSlide.addEventListener('click', () => {
+    //     showSlide(slideIndex += 1);
+    // });
 
 
-    //     if (indexSlide < 0) {
-    //         translateIndex = -300;
-    //         indexSlide = 3;
+    // function showSlide(n) {
+    //     if (n == slide.length * -1) {
+    //         slideIndex = 0
     //     }
-    //     translateIndex += 100;
-    //     --indexSlide
+    //     if (n > 0) {
+    //         slideIndex = (slide.length - 1) * -1
+    //     }
+
+    //     if (slideIndex > - 9) {
+    //         current.textContent = `${0}${(slideIndex * -1) + 1}`;
+    //     } else {
+    //         current.textContent = (slideIndex * -1)+1;
+    //     };
+
     //     slide.forEach((slide) => {
-    //         slide.style.cssText = ``;
+    //         slide.style.cssText = `transition: 0.5s all; transform: translate(${slideIndex * 100}%);`;
     //     });
-    //     slide[indexSlide].style.cssText = `transform: translate(${translateIndex}%);`
+    // }
+
+    // Преподавателя вариант прокрутки слайдера. Слайдер появляется не плавно
 
     // // 1. Слайд c индексом 0
     // // показывается сразу по умолчанию
@@ -176,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // }
 
 
-
+    // Мой вариант прокрутки слайдера. Слайдер появляется не плавно
     // function hideSlide() {
     //     slide.forEach(item => {
     //         item.style.display = "none"; /* удаляем весь контент */
@@ -188,7 +223,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // }
     // hideSlide();
     // showSlide();
-
 
     // slide.forEach((item, c) => {
     //     total.textContent = `${0}${c + 1}`;
