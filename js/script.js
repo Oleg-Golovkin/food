@@ -74,8 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (slideIndex == slide.length) {
             slideIndex = 1;
+            dot.forEach((dot) => {
+                dot.style.backgroundColor = '#fff';
+            });
+            dot[slideIndex - 1].style.backgroundColor = "black";
         } else {
             slideIndex++;
+            dot.forEach((dot) => {
+                dot.style.backgroundColor = '#fff';
+            });
+            dot[slideIndex - 1].style.backgroundColor = "black";
+
         }
 
         if (slide.length < 10) {
@@ -92,24 +101,30 @@ document.addEventListener("DOMContentLoaded", () => {
             offset -= +width.slice(0, width.length - 2);
         }
         sliderWrapper2.style.transform = `translateX(-${offset}px)`;
-        
+
         if (slideIndex == 1) {
             slideIndex = slide.length;
+            dot.forEach((dot) => {
+                dot.style.backgroundColor = '#fff';
+            });
+            dot[slideIndex - 1].style.backgroundColor = "black";
         } else {
             slideIndex--;
+            dot.forEach((dot) => {
+                dot.style.backgroundColor = '#fff';
+            });
+            dot[slideIndex - 1].style.backgroundColor = "black";
         }
 
         if (slide.length < 10) {
             current.textContent = `0${slideIndex}`;
         } else {
             current.textContent = slideIndex;
-        }        
+        }
     });
 
     dot.forEach((dot, i) => {
-       
-        dot.addEventListener('click' , () => {
-            
+        dot.addEventListener('click', () => {
             dot.style.backgroundColor = "black";
             let atributeDot = dot.getAttribute('data-carousel-indicators');
             sliderWrapper2.style.transform = `translateX(-${atributeDot * (+width.slice(0, width.length - 2))}px)`;
@@ -118,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 current.textContent = `0${slideIndex}`;
             } else {
                 current.textContent = slideIndex;
-            }           
+            }
         });
     });
 
