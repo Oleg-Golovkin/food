@@ -39,15 +39,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //----------------------------------Слайдер-------------------------//
     const slide = document.querySelectorAll(".offer__slide"),
+        slider = document.querySelector(".offer__slider"),
+        dot = document.querySelectorAll(".dot"),
         nextSlide = document.querySelector(".offer__slider-next"),
         prevSlide = document.querySelector(".offer__slider-prev"),
         sliderWrapper2 = document.querySelector(".offer__slider-wrapper-2"),
         sliderWrapper = document.querySelector(".offer__slider-wrapper"),
+        total = document.querySelector("#total"),
+        current = document.querySelector("#current"),
         width = window.getComputedStyle(sliderWrapper).width;
 
     let offset = 0,
         slideIndex = 1;
 
+    slider.style.position = "relative";
     sliderWrapper2.style.width = `${slide.length * 100}%`;
     sliderWrapper2.style.transition = '0.5s all';
 
@@ -87,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             offset -= +width.slice(0, width.length - 2);
         }
         sliderWrapper2.style.transform = `translateX(-${offset}px)`;
-
+        
         if (slideIndex == 1) {
             slideIndex = slide.length;
         } else {
@@ -98,7 +103,23 @@ document.addEventListener("DOMContentLoaded", () => {
             current.textContent = `0${slideIndex}`;
         } else {
             current.textContent = slideIndex;
-        }
+        }        
+    });
+
+    dot.forEach((dot, i) => {
+       
+        dot.addEventListener('click' , () => {
+            
+            dot.style.backgroundColor = "black";
+            let atributeDot = dot.getAttribute('data-carousel-indicators');
+            sliderWrapper2.style.transform = `translateX(-${atributeDot * (+width.slice(0, width.length - 2))}px)`;
+            slideIndex = +atributeDot + 1;
+            if (slide.length < 10) {
+                current.textContent = `0${slideIndex}`;
+            } else {
+                current.textContent = slideIndex;
+            }           
+        });
     });
 
 
@@ -107,14 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Мой вариант прокрутки слайдера. Слайдер появляется плавно
     // let slideIndex = 0;
+    // slider.style.position = "relative";
 
-    // sliderWrapper.style.cssText = `width: ${slide.length * 100}%;`;
-    // showSlide(slideIndex)
+    // sliderWrapper2.style.cssText = `width: ${slide.length * 100}%;`;
+    // showSlide(slideIndex);
+
     // if (slide.length < 10) {
     //     total.textContent = `${0}${slide.length}`;
     // } else {
     //     total.textContent = slide.length;
-    // };
+    // }
 
     // nextSlide.addEventListener('click', () => {
     //     showSlide(slideIndex += -1);
@@ -127,22 +150,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // function showSlide(n) {
     //     if (n == slide.length * -1) {
-    //         slideIndex = 0
+    //         slideIndex = 0;
     //     }
     //     if (n > 0) {
-    //         slideIndex = (slide.length - 1) * -1
+    //         slideIndex = (slide.length - 1) * -1;
     //     }
 
-    //     if (slideIndex > - 9) {
+    //     if (slideIndex > -9) {
     //         current.textContent = `${0}${(slideIndex * -1) + 1}`;
     //     } else {
-    //         current.textContent = (slideIndex * -1)+1;
-    //     };
+    //         current.textContent = (slideIndex * -1) + 1;
+    //     }
 
-    //     slide.forEach((slide) => {
+    //     slide.forEach((slide, i) => {
     //         slide.style.cssText = `transition: 0.5s all; transform: translate(${slideIndex * 100}%);`;
     //     });
     // }
+
+
 
     // Преподавателя вариант прокрутки слайдера. Слайдер появляется не плавно
 
