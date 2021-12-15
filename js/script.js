@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sliderWrapper2.style.width = `${slide.length * 100}%`;
     sliderWrapper2.style.transition = '0.5s all';
 
+
     if (slide.length < 10) {
         total.textContent = `0${slide.length}`;
         current.textContent = `0${slideIndex}`;
@@ -63,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         total.textContent = slide.length;
         current.textContent = slideIndex;
     }
+
 
     nextSlide.addEventListener('click', () => {
         if (offset == (+width.slice(0, width.length - 2) * (slide.length - 1))) {
