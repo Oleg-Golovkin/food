@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //----------------------------------Слайдер-------------------------//
     const slide = document.querySelectorAll(".offer__slide"),
         slider = document.querySelector(".offer__slider"),
-        dot = document.querySelectorAll(".dot"),
         nextSlide = document.querySelector(".offer__slider-next"),
         prevSlide = document.querySelector(".offer__slider-prev"),
         sliderWrapper2 = document.querySelector(".offer__slider-wrapper-2"),
@@ -48,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         total = document.querySelector("#total"),
         current = document.querySelector("#current"),
         width = window.getComputedStyle(sliderWrapper).width;
+    let liArrey = [];
 
     let offset = 0,
         slideIndex = 1;
@@ -76,18 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (slideIndex == slide.length) {
             slideIndex = 1;
-            dot.forEach((dot) => {
-                dot.style.backgroundColor = '#fff';
-            });
-            dot[slideIndex - 1].style.backgroundColor = "black";
         } else {
             slideIndex++;
-            dot.forEach((dot) => {
-                dot.style.backgroundColor = '#fff';
-            });
-            dot[slideIndex - 1].style.backgroundColor = "black";
-
         }
+        liArrey.forEach(li => li.style.opacity = "0.5");
+        liArrey[slideIndex - 1].style.opacity = "1";
+
 
         if (slide.length < 10) {
             current.textContent = `0${slideIndex}`;
@@ -104,19 +98,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         sliderWrapper2.style.transform = `translateX(-${offset}px)`;
 
+
         if (slideIndex == 1) {
             slideIndex = slide.length;
-            dot.forEach((dot) => {
-                dot.style.backgroundColor = '#fff';
-            });
-            dot[slideIndex - 1].style.backgroundColor = "black";
         } else {
             slideIndex--;
-            dot.forEach((dot) => {
-                dot.style.backgroundColor = '#fff';
-            });
-            dot[slideIndex - 1].style.backgroundColor = "black";
         }
+
+        liArrey.forEach(li => li.style.opacity = "0.5");
+        liArrey[slideIndex - 1].style.opacity = "1";
 
         if (slide.length < 10) {
             current.textContent = `0${slideIndex}`;
@@ -125,19 +115,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    dot.forEach((dot, i) => {
-        dot.addEventListener('click', () => {
-            dot.style.backgroundColor = "black";
-            let atributeDot = dot.getAttribute('data-carousel-indicators');
-            sliderWrapper2.style.transform = `translateX(-${atributeDot * (+width.slice(0, width.length - 2))}px)`;
-            slideIndex = +atributeDot + 1;
+    const ol = document.createElement("ol");
+    ol.classList.add("carousel-indicators");
+    slider.append(ol);
+
+    for (let i = 0; i < slide.length; i++) {
+        const li = document.createElement("li");
+        li.setAttribute("data-carousel-indicators", i + 1);
+        li.classList.add("dot");
+        ol.append(li);
+        if (i == 0) {
+            li.style.opacity = "1";
+        }
+        liArrey.push(li);
+    }
+
+
+    liArrey.forEach(li => {
+        li.addEventListener('click', () => {
+            let Attribute = li.getAttribute("data-carousel-indicators");
+            slideIndex = Attribute;
+            offset = +width.slice(0, width.length - 2) * (Attribute - 1);
+            sliderWrapper2.style.transform = `translateX(-${offset}px)`;
+            liArrey.forEach(li => li.style.opacity = "0.5");
+            li.style.opacity = "1";
             if (slide.length < 10) {
-                current.textContent = `0${slideIndex}`;
+                current.textContent = `0${+slideIndex}`;
             } else {
-                current.textContent = slideIndex;
+                current.textContent = +slideIndex;
             }
         });
     });
+
+
+
 
 
 
