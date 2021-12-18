@@ -150,10 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-
-
-
     // Мой вариант прокрутки слайдера. Слайдер появляется плавно
     // let slideIndex = 0;
     // slider.style.position = "relative";
