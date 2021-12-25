@@ -149,51 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-
-
-    // Мой вариант прокрутки слайдера. Слайдер появляется плавно
-    // let slideIndex = 0;
-    // slider.style.position = "relative";
-
-    // sliderWrapper2.style.cssText = `width: ${slide.length * 100}%;`;
-    // showSlide(slideIndex);
-
-    // if (slide.length < 10) {
-    //     total.textContent = `${0}${slide.length}`;
-    // } else {
-    //     total.textContent = slide.length;
-    // }
-
-    // nextSlide.addEventListener('click', () => {
-    //     showSlide(slideIndex += -1);
-    // });
-
-    // prevSlide.addEventListener('click', () => {
-    //     showSlide(slideIndex += 1);
-    // });
-
-
-    // function showSlide(n) {
-    //     if (n == slide.length * -1) {
-    //         slideIndex = 0;
-    //     }
-    //     if (n > 0) {
-    //         slideIndex = (slide.length - 1) * -1;
-    //     }
-
-    //     if (slideIndex > -9) {
-    //         current.textContent = `${0}${(slideIndex * -1) + 1}`;
-    //     } else {
-    //         current.textContent = (slideIndex * -1) + 1;
-    //     }
-
-    //     slide.forEach((slide, i) => {
-    //         slide.style.cssText = `transition: 0.5s all; transform: translate(${slideIndex * 100}%);`;
-    //     });
-    // }
-
-
-
     // Преподавателя вариант прокрутки слайдера. Слайдер появляется не плавно
 
     // // 1. Слайд c индексом 0
