@@ -40,7 +40,8 @@
 }
 
 .offer__slider-wrapper {
-  overflow: hidden
+  overflow: hidden;
+  width: 600px;
 }
 .offer__slider-wrapper-2 {
   display: flex;
