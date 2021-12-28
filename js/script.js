@@ -52,6 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let offset = 0,
         slideIndex = 1;
 
+    function offsetSlide() {
+    return +width.replace(/\D/g, '');
+    }
+
     slider.style.position = "relative";
     sliderWrapper2.style.width = `${slide.length * 100}%`;
     sliderWrapper2.style.transition = '0.5s all';
@@ -65,12 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
         current.textContent = slideIndex;
     }
 
+    
+
 
     nextSlide.addEventListener('click', () => {
-        if (offset == +width.replace(/\D/g, '') * (slide.length - 1)) {
+        if (offset == offsetSlide() * (slide.length - 1)) {
             offset = 0;
         } else {
-            offset += +width.replace(/\D/g, '');
+            offset += offsetSlide();
         }
         sliderWrapper2.style.transform = `translateX(-${offset}px)`;
 
@@ -92,10 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevSlide.addEventListener('click', () => {
         if (offset == 0) {
-            offset = +width.replace(/\D/g, '') * (slide.length - 1);
-            
+            offset = offsetSlide() * (slide.length - 1);
+
         } else {
-            offset -= +width.replace(/\D/g, '');
+            offset -= offsetSlide();
         }
         sliderWrapper2.style.transform = `translateX(-${offset}px)`;
 
@@ -136,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         li.addEventListener('click', () => {
             let Attribute = li.getAttribute("data-carousel-indicators");
             slideIndex = Attribute;
-            offset = +width.replace(/\D/g, '') * (Attribute - 1);
+            offset = offsetSlide() * (Attribute - 1);
             sliderWrapper2.style.transform = `translateX(-${offset}px)`;
             liArrey.forEach(li => li.style.opacity = "0.5");
             li.style.opacity = "1";
