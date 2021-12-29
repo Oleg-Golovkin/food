@@ -837,7 +837,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 1.2. проверка на заполненность форм
     function calcTotal() {
-        // Проверка на заполненность хотя бы одной формы
+        // Проверка на:
+        //  заполненность хотя бы одной формы - height weight age
+        //  выбран пол - sex
         if (!sex || !height || !weight || !age) {
             calculatingResult.textContent = "___";
         }
@@ -856,6 +858,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function getDinamicInformation(parantSelector, selector) {
         const elements = document.querySelector(`${parantSelector} div`)
 
+        elements.forEach(element => {
+           
+        })
 
     }
 
