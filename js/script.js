@@ -52,14 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let offset = 0,
         slideIndex = 1;
 
-    function offsetSlide() {
-    return +width.replace(/\D/g, '');
+    function offsetSlide(str) {
+        return +str.replace(/\D/g, '');
     }
 
     slider.style.position = "relative";
     sliderWrapper2.style.width = `${slide.length * 100}%`;
     sliderWrapper2.style.transition = '0.5s all';
-
 
     if (slide.length < 10) {
         total.textContent = `0${slide.length}`;
@@ -69,14 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
         current.textContent = slideIndex;
     }
 
-    
-
-
     nextSlide.addEventListener('click', () => {
-        if (offset == offsetSlide() * (slide.length - 1)) {
+        if (offset == offsetSlide(width) * (slide.length - 1)) {
             offset = 0;
         } else {
-            offset += offsetSlide();
+            offset += offsetSlide(width);
         }
         sliderWrapper2.style.transform = `translateX(-${offset}px)`;
 
@@ -98,10 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevSlide.addEventListener('click', () => {
         if (offset == 0) {
-            offset = offsetSlide() * (slide.length - 1);
+            offset = offsetSlide(width) * (slide.length - 1);
 
         } else {
-            offset -= offsetSlide();
+            offset -= offsetSlide(width);
         }
         sliderWrapper2.style.transform = `translateX(-${offset}px)`;
 
@@ -142,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         li.addEventListener('click', () => {
             let Attribute = li.getAttribute("data-carousel-indicators");
             slideIndex = Attribute;
-            offset = offsetSlide() * (Attribute - 1);
+            offset = offsetSlide(width) * (Attribute - 1);
             sliderWrapper2.style.transform = `translateX(-${offset}px)`;
             liArrey.forEach(li => li.style.opacity = "0.5");
             li.style.opacity = "1";
@@ -826,6 +822,30 @@ document.addEventListener("DOMContentLoaded", () => {
     //     .map(obj => obj[1])
     //     .filter(obj => typeof (obj) === "number")
     // )
+
+
+    // урок 066. Создаем кулькулятор на сайте.
+
+    const calculatingChooseItem = document.querySelectorAll(".calculating__choose-item"),
+        calculatingChoose = document.querySelectorAll(".calculating__choose"),
+        calculatingMan = document.querySelector("#man"),
+        calculatingWoman = document.querySelector("#woman");
+
+    calculatingChooseItem.forEach(calculatingChooseItem => calculatingChooseItem.classList.remove("calculating__choose-item_active"));
+
+    calculatingChoose.forEach(calculatingChoose => calculatingChoose.addEventListener("click", (e) => {
+        calculatingChooseItem.forEach(calculatingChooseItem => {
+            if (e.target && e.target == calculatingChooseItem) {
+                calculatingChooseItem.classList.toggle("calculating__choose-item_active")
+            }
+            if (e.target && e.target == calculatingChooseItem && e.target.matches("#man")) {
+                console.log("ok");
+            }
+
+        })
+
+    }))
+
 
 
 
