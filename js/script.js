@@ -827,27 +827,48 @@ document.addEventListener("DOMContentLoaded", () => {
     // урок 066. Создаем кулькулятор на сайте.
 
     const calculatingChooseItem = document.querySelectorAll(".calculating__choose-item"),
-        calculatingChoose = document.querySelectorAll(".calculating__choose"),
-        calculatingMan = document.querySelector("#man"),
-        calculatingWoman = document.querySelector("#woman");
+        calculatingResult = document.querySelector(".calculating__result");
+    let sex, height, weight, age, woman, man;
 
-    calculatingChooseItem.forEach(calculatingChooseItem => calculatingChooseItem.classList.remove("calculating__choose-item_active"));
+    // 1. Функция по:
+    // 1.1. созданию формулы, в которой используются
+    // переменные sex, height, weight, age, woman, man
+    // которые будут задаваться в пунктах ...
 
-    calculatingChoose.forEach(calculatingChoose => calculatingChoose.addEventListener("click", (e) => {
-        calculatingChooseItem.forEach(calculatingChooseItem => {
-            if (e.target && e.target == calculatingChooseItem) {
-                calculatingChooseItem.classList.toggle("calculating__choose-item_active")
-            }
-            if (e.target && e.target == calculatingChooseItem && e.target.matches("#man")) {
-                console.log("ok");
-            }
+    // 1.2. проверка на заполненность форм
+    function calcTotal() {
+        // Проверка на заполненность хотя бы одной формы
+        if (!sex || !height || !weight || !age) {
+            calculatingResult.textContent = "___";
+        }
 
-        })
+        // Если нажата кнопка woman, значит подсчет по одной формуле,
+        // если нажата кнопка man, подсчет по другой
+        if (sex == "woman") {
+            calculatingResult.textContent = 655 + (9, 6 * weight) + (1, 8 * height) - (4, 7 * age);
+        } else {
+            calculatingResult.textContent = 66, 5 + (13, 7 * weight) + (5 * height) - (6, 8 * age);
+        }
+    }
 
-    }))
+    calcTotal();
+
+    function getDinamicInformation(parantSelector, selector) {
+        const elements = document.querySelector(`${parantSelector} div`)
+
+
+    }
 
 
 
 
 
-}); 
+
+
+
+
+
+
+
+
+});
