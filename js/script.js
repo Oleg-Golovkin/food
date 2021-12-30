@@ -826,8 +826,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // урок 066. Создаем кулькулятор на сайте.
 
-    const calculatingChooseItem = document.querySelectorAll(".calculating__choose-item"),
-        calculatingResult = document.querySelector(".calculating__result span");
+    const calculatingResult = document.querySelector(".calculating__result span");
     let sex, height, weight, age, ratio;
 
     // 1. Функция по:
@@ -848,9 +847,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Если нажата кнопка woman, значит подсчет по одной формуле,
         // если нажата кнопка man, подсчет по другой
         if (sex === "woman") {
-            calculatingResult.textContent = 655 + (9,6 * weight) + (1,8 * height) - (4,7 * age) * ratio;
+            calculatingResult.textContent = (447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio;
         } else {
-            calculatingResult.textContent = 66,5 + (13,7 * weight) + (5 * height) - (6,8 * age) * ratio;
+            calculatingResult.textContent = (88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio;
         }
     }
 
@@ -869,44 +868,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (e.target.getAttribute('id')) {
                     sex = e.target.getAttribute('id');
                 }
-                console.log(sex);
-                console.log(ratio);
 
                 elements.forEach(element => element.classList.remove(selector));
                 e.target.classList.add(selector);
                 calcTotal();
             });
-            
+
         });
     }
-    getStatickInformation('#gender', ".calculating__choose-item_active");
-    getStatickInformation(".calculating__choose_big", ".calculating__choose-item_active");
+    getStatickInformation('#gender', "calculating__choose-item_active");
+    getStatickInformation(".calculating__choose_big", "calculating__choose-item_active");
 
-    function getDinamicInformation() {
-        const calculatingChooseMedium = document.querySelector(".calculating__choose_medium"),
-            input = calculatingChooseMedium.querySelectorAll("input");
-
-        input.forEach(input => {
-            input.addEventListener("input", (e) => {
-                switch (e.target.getAttribute("id")) {
-                    case "height":
-                        height = +input.value;
-                        break;
-                    case "weight":
-                        weight = +input.value;
-                        break;
-                    case "age":
-                        age = +input.value;
-                        break;
-                }
-                calcTotal();
-
-                console.log(height, weight, age);
-            });
+    function getDinamicInformation(selektor) {
+        const input = document.querySelector(selektor);
+        input.addEventListener("input", (e) => {
+            switch (e.target.getAttribute("id")) {
+                case "height":
+                    height = +input.value;
+                    break;
+                case "weight":
+                    weight = +input.value;
+                    break;
+                case "age":
+                    age = +input.value;
+                    break;
+            }
+            calcTotal();
         });
     }
 
-    getDinamicInformation();
+    getDinamicInformation("#height");
+    getDinamicInformation("#weight");
+    getDinamicInformation("#age");
 
 
 
