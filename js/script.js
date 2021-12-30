@@ -873,7 +873,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.target.classList.add(selector);
                 calcTotal();
             });
-
+ 
         });
     }
     getStatickInformation('#gender', "calculating__choose-item_active");
