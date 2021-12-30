@@ -827,8 +827,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // урок 066. Создаем кулькулятор на сайте.
 
     const calculatingChooseItem = document.querySelectorAll(".calculating__choose-item"),
-        calculatingResult = document.querySelector(".calculating__result");
-    let sex, height, weight, age, woman, man;
+        calculatingResult = document.querySelector(".calculating__result span");
+    let sex, height, weight, age, ratio;
 
     // 1. Функция по:
     // 1.1. созданию формулы, в которой используются
@@ -840,29 +840,75 @@ document.addEventListener("DOMContentLoaded", () => {
         // Проверка на:
         //  заполненность хотя бы одной формы - height weight age
         //  выбран пол - sex
-        if (!sex || !height || !weight || !age) {
+        if (!sex || !height || !weight || !age || !ratio) {
             calculatingResult.textContent = "___";
+            return;
         }
 
         // Если нажата кнопка woman, значит подсчет по одной формуле,
         // если нажата кнопка man, подсчет по другой
-        if (sex == "woman") {
-            calculatingResult.textContent = 655 + (9, 6 * weight) + (1, 8 * height) - (4, 7 * age);
+        if (sex === "woman") {
+            calculatingResult.textContent = 655 + (9,6 * weight) + (1,8 * height) - (4,7 * age) * ratio;
         } else {
-            calculatingResult.textContent = 66, 5 + (13, 7 * weight) + (5 * height) - (6, 8 * age);
+            calculatingResult.textContent = 66,5 + (13,7 * weight) + (5 * height) - (6,8 * age) * ratio;
         }
     }
 
     calcTotal();
 
-    function getDinamicInformation(parantSelector, selector) {
-        const elements = document.querySelector(`${parantSelector} div`)
-
+    function getStatickInformation(parantSelector, selector) {
+        const elements = document.querySelectorAll(`${parantSelector} div`);
         elements.forEach(element => {
-           
-        })
+            element.addEventListener("click", (e) => {
+                // У одного из блоков есть и id и дата-атрибут. Поэтому 
+                // у этого блока ищем именно дата-атрибут
+                if (e.target.getAttribute("data-ratio")) {
+                    ratio = +e.target.getAttribute("data-ratio");
+                    // У другого блока есть только дата-атрибут, поэтому у него ищем
+                    // именно его
+                } else if (e.target.getAttribute('id')) {
+                    sex = e.target.getAttribute('id');
+                }
+                console.log(sex);
+                console.log(ratio);
 
+                elements.forEach(element => element.classList.remove(selector));
+                e.target.classList.add(selector);
+                calcTotal();
+            });
+            
+        });
     }
+    getStatickInformation('#gender', ".calculating__choose-item_active");
+    getStatickInformation(".calculating__choose_big", ".calculating__choose-item_active");
+
+    function getDinamicInformation() {
+        const calculatingChooseMedium = document.querySelector(".calculating__choose_medium"),
+            input = calculatingChooseMedium.querySelectorAll("input");
+
+        input.forEach(input => {
+            input.addEventListener("input", (e) => {
+                switch (e.target.getAttribute("id")) {
+                    case "height":
+                        height = +input.value;
+                        break;
+                    case "weight":
+                        weight = +input.value;
+                        break;
+                    case "age":
+                        age = +input.value;
+                        break;
+                }
+                calcTotal();
+
+                console.log(height, weight, age);
+            });
+        });
+    }
+
+    getDinamicInformation();
+
+
 
 
 
