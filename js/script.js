@@ -968,6 +968,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function getDinamicInformation(id) {
         const input = document.querySelector(id);
         input.addEventListener("input", (e) => {
+            // Проверка на то, чтобы в input вводились
+            // только цифры.
+            if(input.value.match(/\D/)) {
+                input.style.border = "1px solid red"
+            } else {
+                input.style.border = "none"
+            };
+
     // Множество условий потому, что функция применима
     // ко всем input, у каждого из которых индивидуальный
     // id. Следовательно, чтобы вытащить из нужного 
@@ -977,7 +985,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // совпадает атрибут id, его значение для помещения в пустую
     // переменную
             const atribute = e.target.getAttribute("id");
-    
+            
             if (atribute == "height") {
                 height = +e.target.value;
             }
