@@ -960,21 +960,32 @@ document.addEventListener("DOMContentLoaded", () => {
     getStaticInformation("#gender", "calculating__choose-item_active");
     getStaticInformation(".calculating__choose_big", "calculating__choose-item_active");
 
-
+// 3 функция по получению информации у input. 
+// Одна функция для каждого input, поэтому атрибут
+// задаю, который использую для получения доступа к каждому
+// input
     function getDinamicInformation(id) {
         const input = document.querySelector(id);
+
         input.addEventListener("input", (e) => {
+    // Множество условий потому, что функция применима
+    // ко всем input, у каждого из которых индивидуальный
+    // id. Следовательно, чтобы вытащить из каждого
+    // одельного блока значения и раскидать их в нужные переменные,
+    // через условие сравниваю совпадает ли атрибут id с тем
+    // атрибутом, который мне нужен. И если совпадает, то присваиваю
+    // необходимую информацию.
+
             const atribute = e.target.getAttribute("id");
+    
             if (atribute == "height") {
                 height = +e.target.value;
             }
             if (atribute == "weight") {
                 weight = +e.target.value;
-
             }
             if (atribute == "age") {
                 age = +e.target.value;
-
             }
             resaultFormula();
         })
