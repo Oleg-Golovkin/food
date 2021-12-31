@@ -919,9 +919,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // В формуле используются пустые переменные, заполнение которых
         // происходит в двух следующих функциях
         if (sex = "woman") {
-            calculatingResult.textContent = (447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio;
+            // Math.round это округление до целых чисел
+            // Формула для подсчета калорий взята из инета
+            calculatingResult.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
         } else {
-            calculatingResult.textContent = (88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio;
+            calculatingResult.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio);
         }
     };
     // Эту формулу вызываем в двух других функциях,
@@ -956,26 +958,24 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         })
     }
-
     getStaticInformation("#gender", "calculating__choose-item_active");
     getStaticInformation(".calculating__choose_big", "calculating__choose-item_active");
 
 // 3 функция по получению информации у input. 
-// Одна функция для каждого input, поэтому атрибут
-// задаю, который использую для получения доступа к каждому
+// Одна функция для каждого input, поэтому задаю атрибут
+// , который использую для получения доступа к каждому
 // input
     function getDinamicInformation(id) {
         const input = document.querySelector(id);
-
         input.addEventListener("input", (e) => {
     // Множество условий потому, что функция применима
     // ко всем input, у каждого из которых индивидуальный
-    // id. Следовательно, чтобы вытащить из каждого
-    // одельного блока значения и раскидать их в нужные переменные,
-    // через условие сравниваю совпадает ли атрибут id с тем
-    // атрибутом, который мне нужен. И если совпадает, то присваиваю
-    // необходимую информацию.
-
+    // id. Следовательно, чтобы вытащить из нужного 
+    // input значение, у каждого input получю его атрибут id
+    // и через условие сравниваю с этим же атрибутом, чтобы
+    // остановить перебор и вытащить у этого самого input, у которого
+    // совпадает атрибут id, его значение для помещения в пустую
+    // переменную
             const atribute = e.target.getAttribute("id");
     
             if (atribute == "height") {
