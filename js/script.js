@@ -824,87 +824,164 @@ document.addEventListener("DOMContentLoaded", () => {
     // )
 
 
-    // урок 066. Создаем кулькулятор на сайте.
+    //______________ урок 066. Создаем кулькулятор на сайте____________//.
+
+    // const calculatingResult = document.querySelector(".calculating__result span");
+    // let sex, height, weight, age, ratio;
+
+    // // 1. Функция по:
+    // // 1.1. созданию формулы, в которой используются
+    // // переменные sex, height, weight, age, woman, man
+    // // которые будут задаваться в пунктах ...
+
+    // // 1.2. проверка на заполненность форм
+    // function calcTotal() {
+    //     // Проверка на:
+    //     //  заполненность хотя бы одной формы - height weight age
+    //     //  выбран пол - sex
+    //     if (!sex || !height || !weight || !age || !ratio) {
+    //         calculatingResult.textContent = "___";
+    //         return;
+    //     }
+
+    //     // Если нажата кнопка woman, значит подсчет по одной формуле,
+    //     // если нажата кнопка man, подсчет по другой
+    //     if (sex === "woman") {
+    //         calculatingResult.textContent = (447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio;
+    //     } else {
+    //         calculatingResult.textContent = (88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio;
+    //     }
+    // }
+
+    // calcTotal();
+
+    // function getStatickInformation(parantSelector, selector) {
+    //     const elements = document.querySelectorAll(`${parantSelector} div`);
+    //     elements.forEach(element => {
+    //         element.addEventListener("click", (e) => {
+    //             // У одного из блоков есть и id и дата-атрибут. Поэтому 
+    //             // у этого блока ищем именно дата-атрибут
+    //             if (e.target.getAttribute("data-ratio")) {
+    //                 ratio = +e.target.getAttribute("data-ratio");
+    //                 // У другого блока есть только дата-атрибут, поэтому у него ищем
+    //                 // именно его
+    //             } else if (e.target.getAttribute('id')) {
+    //                 sex = e.target.getAttribute('id');
+    //             }
+
+    //             elements.forEach(element => element.classList.remove(selector));
+    //             e.target.classList.add(selector);
+    //             calcTotal();
+    //         });
+
+    //     });
+    // }
+    // getStatickInformation('#gender', "calculating__choose-item_active");
+    // getStatickInformation(".calculating__choose_big", "calculating__choose-item_active");
+
+    // function getDinamicInformation(selektor) {
+    //     const input = document.querySelector(selektor);
+    //     input.addEventListener("input", (e) => {
+    //         switch (e.target.getAttribute("id")) {
+    //             case "height":
+    //                 height = +input.value;
+    //                 break;
+    //             case "weight":
+    //                 weight = +input.value;
+    //                 break;
+    //             case "age":
+    //                 age = +input.value;
+    //                 break;
+    //         }
+    //         calcTotal();
+    //     });
+    // }
+
+    // getDinamicInformation("#height");
+    // getDinamicInformation("#weight");
+    // getDinamicInformation("#age");
+
+
 
     const calculatingResult = document.querySelector(".calculating__result span");
-    let sex, height, weight, age, ratio;
+    let sex, ratio, height, weight, age;
 
     // 1. Функция по:
-    // 1.1. созданию формулы, в которой используются
-    // переменные sex, height, weight, age, woman, man
-    // которые будут задаваться в пунктах ...
-
-    // 1.2. проверка на заполненность форм
-    function calcTotal() {
-        // Проверка на:
-        //  заполненность хотя бы одной формы - height weight age
-        //  выбран пол - sex
-        if (!sex || !height || !weight || !age || !ratio) {
-            calculatingResult.textContent = "___";
-            return;
+    // // 1.1. Проверка на заполненность переменных
+    function resaultFormula() {
+        // Если хотябы одна переменная не заполнена, то..
+        if (!sex || !ratio || !height || !weight || !age) {
+            calculatingResult.textContent = "____";
+            // формула не применяется
+            return
         }
-
-        // Если нажата кнопка woman, значит подсчет по одной формуле,
-        // если нажата кнопка man, подсчет по другой
-        if (sex === "woman") {
+        // 1.2 Подсчет формулы, если в функции № 2 выбран пол
+        // В формуле используются пустые переменные, заполнение которых
+        // происходит в двух следующих функциях
+        if (sex = "woman") {
             calculatingResult.textContent = (447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio;
         } else {
             calculatingResult.textContent = (88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio;
         }
-    }
+    };
+    // Эту формулу вызываем в двух других функциях,
+    // чтобы эта формула каждый раз пересчитывалась 
+    // при добавлении новых данных в этих функциях 
+    resaultFormula();
 
-    calcTotal();
-
-    function getStatickInformation(parantSelector, selector) {
-        const elements = document.querySelectorAll(`${parantSelector} div`);
+    // 2 Функция по получению атрибутов из нажимаемых блоков и присвоение
+    // этих атрибутов к пустым переменным
+    function getStaticInformation(parantSelector, activeSelector) {
+        // 2.1. Одна функция для двух блоков селекторов, у которых разные родители.
+        // Поэтому, чтобы функция была применима к обоим блокам, родителя задаю
+        // через атрибут parantSelector
+        const elements = document.querySelectorAll(`${parantSelector} div`)
         elements.forEach(element => {
             element.addEventListener("click", (e) => {
-                // У одного из блоков есть и id и дата-атрибут. Поэтому 
-                // у этого блока ищем именно дата-атрибут
+        // У одного из блоков есть и id и дата-атрибут. Поэтому 
+        //именно у этого блока ищем то, что нету у второго - дата-атрибут, а..
                 if (e.target.getAttribute("data-ratio")) {
                     ratio = +e.target.getAttribute("data-ratio");
-                    // У другого блока есть только дата-атрибут, поэтому у него ищем
-                    // именно его
-                } else if (e.target.getAttribute('id')) {
-                    sex = e.target.getAttribute('id');
+        // у второго ищем все остальное        
+                } else {
+                    sex = e.target.getAttribute("id");
                 }
-
-                elements.forEach(element => element.classList.remove(selector));
-                e.target.classList.add(selector);
-                calcTotal();
-            });
- 
-        });
+        // Обычное удаление у всех класса и присвоение его к нажимаемому        
+                elements.forEach(element => {
+                    element.classList.remove(activeSelector)
+                });
+                e.target.classList.add(activeSelector);
+        // Переподсчет формулы c учетом новых данных.
+                resaultFormula();
+            })
+        })
     }
-    getStatickInformation('#gender', "calculating__choose-item_active");
-    getStatickInformation(".calculating__choose_big", "calculating__choose-item_active");
 
-    function getDinamicInformation(selektor) {
-        const input = document.querySelector(selektor);
+    getStaticInformation("#gender", "calculating__choose-item_active");
+    getStaticInformation(".calculating__choose_big", "calculating__choose-item_active");
+
+
+    function getDinamicInformation(id) {
+        const input = document.querySelector(id);
         input.addEventListener("input", (e) => {
-            switch (e.target.getAttribute("id")) {
-                case "height":
-                    height = +input.value;
-                    break;
-                case "weight":
-                    weight = +input.value;
-                    break;
-                case "age":
-                    age = +input.value;
-                    break;
+            const atribute = e.target.getAttribute("id");
+            if (atribute == "height") {
+                height = +e.target.value;
             }
-            calcTotal();
-        });
-    }
+            if (atribute == "weight") {
+                weight = +e.target.value;
 
+            }
+            if (atribute == "age") {
+                age = +e.target.value;
+
+            }
+            resaultFormula();
+        })
+    }
     getDinamicInformation("#height");
     getDinamicInformation("#weight");
     getDinamicInformation("#age");
-
-
-
-
-
 
 
 
