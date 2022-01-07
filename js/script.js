@@ -835,14 +835,14 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         sex = "woman";
         localStorage.setItem("sex", "woman");
-    };
+    }
 
     if (localStorage.getItem("ratio")) {
         ratio = localStorage.getItem("ratio");
     } else {
         ratio = 1.375;
         localStorage.setItem("ratio", 1.375);
-    };
+    }
 
 
 
@@ -854,12 +854,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!sex || !ratio || !height || !weight || !age) {
             calculatingResult.textContent = "____";
             // формула не применяется
-            return
+            return;
         }
         // 1.2 Подсчет формулы, если в функции № 2 выбран пол
         // В формуле используются пустые переменные, заполнение которых
         // происходит в двух следующих функциях
-        if (sex = "woman") {
+        if (sex === "woman") {
             // Math.round это округление до целых чисел
             // Формула для подсчета калорий взята из инета
             calculatingResult.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
@@ -874,8 +874,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initLocalStorage(parantSelector, activeSelector) {
         let elements = document.querySelectorAll(`${parantSelector} div`);
+        
         elements.forEach(element => {
-
             element.classList.remove(activeSelector);
             if (element.getAttribute("id") === localStorage.getItem("sex")) {
                 element.classList.add(activeSelector);
@@ -883,7 +883,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (element.getAttribute("data-ratio") === localStorage.getItem("ratio")) {
                 element.classList.add(activeSelector);
             }
-        })
+        });
     }
 
     initLocalStorage("#gender", "calculating__choose-item_active");
@@ -902,19 +902,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 //именно у этого блока ищем то, что нету у второго - дата-атрибут, а..
                 if (e.target.getAttribute("data-ratio")) {
                     ratio = +e.target.getAttribute("data-ratio");
-                    // у второго ищем все остальное        
+                    // у второго ищем все остальное    
+                    localStorage.setItem("ratio", +e.target.getAttribute("data-ratio"));
                 } else {
                     sex = e.target.getAttribute("id");
+                    localStorage.setItem("sex", e.target.getAttribute("id"));
                 }
-                // Обычное удаление у всех класса и присвоение его к нажимаемому        
+                // Обычное удаление у всех класса и присвоение его к нажимаемому 
                 elements.forEach(element => {
-                    element.classList.remove(activeSelector)
+                    element.classList.remove(activeSelector);
                 });
                 e.target.classList.add(activeSelector);
                 // Переподсчет формулы c учетом новых данных.
                 resaultFormula();
-            })
-        })
+            });
+        });
     }
     getStaticInformation("#gender", "calculating__choose-item_active");
     getStaticInformation(".calculating__choose_big", "calculating__choose-item_active");
@@ -929,10 +931,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // Необязательный блок. Проверка на то, чтобы в input вводились
             // только цифры.
             if (input.value.match(/\D/)) {
-                input.style.border = "1px solid red"
+                input.style.border = "1px solid red";
             } else {
-                input.style.border = "none"
-            };
+                input.style.border = "none";
+            }
 
             // Множество условий потому, что функция применима
             // ко всем input, у каждого из которых индивидуальный
@@ -954,7 +956,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 age = +e.target.value;
             }
             resaultFormula();
-        })
+        });
     }
     getDinamicInformation("#height");
     getDinamicInformation("#weight");
