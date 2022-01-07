@@ -866,7 +866,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             calculatingResult.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio);
         }
-    };
+    }; 
     // Эту формулу вызываем в двух других функциях,
     // чтобы эта формула каждый раз пересчитывалась 
     // при добавлении новых данных в этих функциях 
