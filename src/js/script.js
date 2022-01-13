@@ -1,383 +1,17 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Tab
-    const tabHeaderItems = document.querySelector(".tabheader__items"),
-        tabHeaderItem = document.querySelectorAll(".tabheader__item"),
-        tabContent = document.querySelectorAll(".tabcontent");
+    const Tab = require("./tab"),
+        Slider = require("./slider"),
+        Timer = require("./timer");
+    Tab();
+    Slider();
+    Timer();
+   
 
-    function hideTabContent() {
-        tabContent.forEach(item => {
-            item.classList.add("hide");
-            item.classList.remove('show', 'fade');
-        });
+    
 
-        tabHeaderItem.forEach(item => {
-            item.classList.remove("tabheader__item_active");
-        });
-    }
-
-    function showTabContent(i = 0) {
-        tabHeaderItem[i].classList.add("tabheader__item_active");
-        tabContent[i].classList.add('show', 'fade');
-        tabContent[i].classList.remove('hide');
-    }
-
-    hideTabContent();
-    showTabContent();
-
-    tabHeaderItems.addEventListener("click", (e) => {
-        if (e.target && e.target.classList.contains("tabheader__item")) {
-            tabHeaderItem.forEach((item, i) => {
-                if (e.target == item) {
-                    hideTabContent();
-                    showTabContent(i);
-                }
-            });
-        }
-    });
-
-    //----------------------------------Слайдер-------------------------//
-    const slide = document.querySelectorAll(".offer__slide"),
-        slider = document.querySelector(".offer__slider"),
-        nextSlide = document.querySelector(".offer__slider-next"),
-        prevSlide = document.querySelector(".offer__slider-prev"),
-        sliderWrapper2 = document.querySelector(".offer__slider-wrapper-2"),
-        sliderWrapper = document.querySelector(".offer__slider-wrapper"),
-        total = document.querySelector("#total"),
-        current = document.querySelector("#current"),
-        width = window.getComputedStyle(sliderWrapper).width;
-    let liArrey = [];
-
-    let offset = 0,
-        slideIndex = 1;
-
-    function offsetSlide(str) {
-        return +str.replace(/\D/g, '');
-    }
-
-    slider.style.position = "relative";
-    sliderWrapper2.style.width = `${slide.length * 100}%`;
-    sliderWrapper2.style.transition = '0.5s all';
-
-    if (slide.length < 10) {
-        total.textContent = `0${slide.length}`;
-        current.textContent = `0${slideIndex}`;
-    } else {
-        total.textContent = slide.length;
-        current.textContent = slideIndex;
-    }
-
-    nextSlide.addEventListener('click', () => {
-        if (offset == offsetSlide(width) * (slide.length - 1)) {
-            offset = 0;
-        } else {
-            offset += offsetSlide(width);
-        }
-        sliderWrapper2.style.transform = `translateX(-${offset}px)`;
-
-        if (slideIndex == slide.length) {
-            slideIndex = 1;
-        } else {
-            slideIndex++;
-        }
-        liArrey.forEach(li => li.style.opacity = "0.5");
-        liArrey[slideIndex - 1].style.opacity = "1";
-
-
-        if (slide.length < 10) {
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = slideIndex;
-        }
-    });
-
-    prevSlide.addEventListener('click', () => {
-        if (offset == 0) {
-            offset = offsetSlide(width) * (slide.length - 1);
-
-        } else {
-            offset -= offsetSlide(width);
-        }
-        sliderWrapper2.style.transform = `translateX(-${offset}px)`;
-
-
-        if (slideIndex == 1) {
-            slideIndex = slide.length;
-        } else {
-            slideIndex--;
-        }
-
-        liArrey.forEach(li => li.style.opacity = "0.5");
-        liArrey[slideIndex - 1].style.opacity = "1";
-
-        if (slide.length < 10) {
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = slideIndex;
-        }
-    });
-
-    const ol = document.createElement("ol");
-    ol.classList.add("carousel-indicators");
-    slider.append(ol);
-
-    for (let i = 0; i < slide.length; i++) {
-        const li = document.createElement("li");
-        li.setAttribute("data-carousel-indicators", i + 1);
-        li.classList.add("dot");
-        ol.append(li);
-        if (i == 0) {
-            li.style.opacity = "1";
-        }
-        liArrey.push(li);
-    }
-
-
-    liArrey.forEach(li => {
-        li.addEventListener('click', () => {
-            let Attribute = li.getAttribute("data-carousel-indicators");
-            slideIndex = Attribute;
-            offset = offsetSlide(width) * (Attribute - 1);
-            sliderWrapper2.style.transform = `translateX(-${offset}px)`;
-            liArrey.forEach(li => li.style.opacity = "0.5");
-            li.style.opacity = "1";
-            if (slide.length < 10) {
-                current.textContent = `0${+slideIndex}`;
-            } else {
-                current.textContent = +slideIndex;
-            }
-        });
-    });
-
-
-    // Преподавателя вариант прокрутки слайдера. Слайдер появляется не плавно
-
-    // // 1. Слайд c индексом 0
-    // // показывается сразу по умолчанию
-    // // см. 3.3. Остальные пунты в п 3 применяться
-    // // не будут
-    // showSlide(indexSlide);
-    // total.textContent = `0${slide.length}`;
-
-
-    // // 2. При нажатии вперед 
-    // // к indexSlide прибавляется либо отнимается 1
-    // nextSlide.addEventListener('click', () => {
-
-    //     showSlide(++indexSlide);
-    //     console.log(indexSlide);
-
-    // });
-
-    // prevSlide.addEventListener('click', () => {
-    //     showSlide(--indexSlide);
-    //     console.log(indexSlide);
-    // });
-    // // 3. showSlide запускается с цифрой 2 (то, 
-    // // что получилось в nextSlide)
-    // // Не записывать в функцию сам indexSlide, 
-    // // поскольку по какой-то причине к let не
-    // // присваивается новое значине при прокуртке 
-    // // по кругу.
-    // function showSlide(n) {
-    //     // 3.1 Прокрутка слайдов по кругу
-    //     // при достижении верхнего слайда
-    //     if (n > slide.length) {
-    //         //  Если то, что получилось в plusSlide
-    //         // больше общего количества слайлов, то
-    //         // возвращаемся к первому слайду            
-    //         indexSlide = 1;
-    //     }
-    //     // 3.1 При достижении ниже
-    //     // перого слайда
-    //     if (n < 1) {
-    //         indexSlide = slide.length;
-    //     }
-
-    //     // 3.2 Удаляем все слайды
-    //     slide.forEach(item => {
-    //         item.style.display = "none";
-
-    //     });
-
-    //     // Если цифры до 10, то они показываются
-    //     // на счетчике с формате 01
-    //     if (n < 10) {
-    //         current.textContent = `${0}${indexSlide}`;
-    //     } else {
-    //         current.textContent = indexSlide;
-    //     };
-
-    //     // 3.3. Показываем слайд с соответствующим 
-    //     // индексом. По умолчанию 1
-    //     slide[indexSlide - 1].style.display = "block";
-    //     /* добавляем один из по порядку */
-    //     // -1, поскольку первый слайд под
-    //     // индексом 0      
-    // }
-
-
-    // Мой вариант прокрутки слайдера. Слайдер появляется не плавно
-    // function hideSlide() {
-    //     slide.forEach(item => {
-    //         item.style.display = "none"; /* удаляем весь контент */
-    //     });
-    // }
-
-    // function showSlide(i = 0) {
-    //     slide[i].style.display = "block"; /* добавляем один из по порядку */
-    // }
-    // hideSlide();
-    // showSlide();
-
-    // slide.forEach((item, c) => {
-    //     total.textContent = `${0}${c + 1}`;
-    // });
-    // let i = 0,
-    //     /* переменная по прокрутке изображения */
-    //     b = 1;
-    // /* переменная по простановке цифры, отсчитывающей
-    //        изображение. Цифра не 0, чтобы было более привычней. */
-    // current.textContent = "01";
-
-    // sliderCounter.addEventListener("click", (e) => {
-    //     if (e.target && e.target.matches(`${".offer__slider-next"}, ${".offer__slide__next__img"}`)) {
-
-    //         if (i == 3) {
-    //             i = 0;
-    //             b = 1;
-    //             current.textContent = `${0}${b}`;
-    //             hideSlide();
-    //             showSlide(i);
-    //             sliderCounter.removeEventListener("click", (e));
-    //         } else if (i <= 3) {
-    //             i++;
-    //             b++;                   
-    //             if (i < 10) {
-    //                 current.textContent = `${0}${b}`;
-    //             } else {
-    //                 current.textContent = b;
-    //             }
-    //             hideSlide();
-    //             showSlide(i);
-    //         }
-    //     }
-
-    //     if (e.target && e.target.matches(`${".offer__slider-prev"}, ${".offer__slide__prev__img"}`)) {
-
-    //         if (i == 0) {
-    //             i = 3;
-    //             b = 4;
-    //             current.textContent = `${0}${b}`;
-    //             hideSlide();
-    //             showSlide(i);
-    //             sliderCounter.removeEventListener("click", (e));
-    //         } else if (i <= 3) {
-    //             i--;
-    //             b--;
-
-    //             if (i < 10) {
-    //                 current.textContent = `${0}${b}`;
-    //             } else {
-    //                 current.textContent = b;
-    //             }
-
-    //             hideSlide();
-    //             showSlide(i);
-    //         }
-    //     }
-    // });
-
-
-    //Timer
-
-    const deadline = "2021-03-31";
-    /* везде подставляем вместо 
-           аргумента endtime */
-
-    function time(endtime) {
-        const t = Date.parse(endtime) - Date.parse(new Date()),
-            days = Math.floor(t / 1000 / 60 / 60 / 24),
-            /* получаем количество дней до 
-            //                    назначенной даты. То, что в скобках, это количество милисекунд в сутках.
-            //                    То есть мы округляем милисекунды до секунд (делим на 1000), до менут (на 60),
-            //                    до часов (на 60) до суток (на 24)
-            //                    Нельзя было сразу 18 400 000 написать? 
-            //                    Через указанный метод округляем получившееся часы (поскольку
-            //                    в результате выражения может получится дробное число), получившееся из
-            //                    произведения желаемой даты и даты текущей). */
-            hours = Math.floor((t / 1000 / 60 / 60) % 24),
-            minutes = Math.floor((t / 1000 / 60) % 60),
-            seconds = Math.floor((t / 1000) % 60);
-        /* Если до назначенной даты больше суток, то получем больше 24 часов (60 минут,
-        //     60 секунд), а в таймере часы, минуты, секунды должны быть до 24 и 60 
-        //     соответственно. Чтобы такого не было через оператор процента мы делим 
-        //     полученные милисекунды t) по указанным формулам.
-        //     Оператор процента делит часы, минуты, секунды до того момента, пока 
-        //     не останется неделимый остаток (меньше часов (минут, секунд), 
-        //     то есть меньше 24 (60)). Этот остаток и будет оставшееся часы 
-        //     (минуты, секунды) до назначенной даты. */
-
-        return {
-            /* закидываем полученный результат в объект, чтобы
-                           проще было вытаскивать из него значения в функции ниже
-                           intervalKlock() */
-            "total": t,
-            "days": days,
-            "hours": hours,
-            "minutes": minutes,
-            "seconds": seconds,
-        };
-    }
-
-    function getTimeZero(num) {
-        /* функция по добавлению нуля
-                   в таймере в тех случаях, когда цифра больше нуля, но меньше 10 */
-        if (num > 0 && num < 10) {
-            return "0" + num;
-        } else {
-            return num;
-        }
-    }
-
-    function setKlock(endtime, selector) {
-        const timer = document.querySelector(selector),
-            days = timer.querySelector("#days"),
-            hours = timer.querySelector("#hours"),
-            minutes = timer.querySelector("#minutes"),
-            seconds = timer.querySelector("#seconds"),
-            timerInterval = setInterval(intervalKlock, 1000);
-        /* задаем повторяющейся через 1000 млс (1 сек) интервал
-         */
-        intervalKlock(endtime);
-
-        function intervalKlock() {
-            /* тело этой функции помещаем 
-                           в интервал, для повторения этого тела каждую секунду */
-            const t = time(endtime);
-
-            days.innerHTML = getTimeZero(t.days);
-            /*  присваиваем к полученным из верстки переменным
-             те значения, которые мы получили из функции time(endtime).
-             Как видно мы обращаемся через точку к объекту, через перменную
-             t */
-            hours.innerHTML = getTimeZero(t.hours);
-            minutes.innerHTML = getTimeZero(t.minutes);
-            seconds.innerHTML = getTimeZero(t.seconds);
-
-            if (t.total <= 0) {
-                /* прекращаем интервал, когда он дойдет до нуля */
-                clearInterval(timerInterval);
-            }
-        }
-    }
-
-    setKlock(deadline, '.timer');
-    /* Вызываем функцию по 
-            вычислению разницы между желаемой датой и действующей,
-           с присвоением полученного значения кажды раз через секунду */
-
+   
 
     // Modal
     const btn = document.querySelectorAll('[data-btn="1"]'),
@@ -874,7 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initLocalStorage(parantSelector, activeSelector) {
         let elements = document.querySelectorAll(`${parantSelector} div`);
-        
+
         elements.forEach(element => {
             element.classList.remove(activeSelector);
             if (element.getAttribute("id") === localStorage.getItem("sex")) {
@@ -979,25 +613,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // console.log(obj.userAge = 40);
 
 
-    function Oleg(name, age) {
-        this.age = age;
-        let userName = name;
-
-        this.say = function() {
-            console.log(`Привет ${userName} с возрастом ${this.age}`)
+    class Oleg {
+        constructor(name) {
+            this._userName = name;
         }
 
-        this.getName = function(){
-            return userName
+        say() {
+            console.log(`Привет ${this._userName}`);
         }
 
-        this.setName = function(Name) {
-            userName = Name
+        get Name() {
+            return this._userName;
         }
+
+        set Name(Name) {
+            this._userName = Name;
+        }
+
     }
 
-    const pp = new Oleg("Олег", 31);
-    pp.setName("Ivan")
+    const pp = new Oleg("Олег");
+    pp.Name = "Ivan";
     pp.say();
-
 });
