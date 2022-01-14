@@ -1,5 +1,3 @@
-// Tab
-
 function Tab() {
     const tabHeaderItems = document.querySelector(".tabheader__items"),
         tabHeaderItem = document.querySelectorAll(".tabheader__item"),

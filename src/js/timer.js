@@ -89,4 +89,4 @@ function Timer() {
  
 }
 
-module.exports = Timer();
+module.exports = Timer;
