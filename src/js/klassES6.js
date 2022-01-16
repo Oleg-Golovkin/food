@@ -1,4 +1,4 @@
-export function KlassES6() {
+export default function KlassES6() {
     class CreatMenuItem {
         constructor(parentSelector, img, altimg, h3, menuItemDescr, menuItemTotalSpan, ...selector) {
             this.img = img;

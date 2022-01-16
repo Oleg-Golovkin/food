@@ -1,4 +1,4 @@
-export function Modal() {
+export default function Modal() {
     // Modal
     const btn = document.querySelectorAll('[data-btn="1"]'),
         modal = document.querySelector("[data-modal]"),

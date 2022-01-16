@@ -1,4 +1,4 @@
-export function Slider() {
+export default function Slider() {
     const slide = document.querySelectorAll(".offer__slide"),
         slider = document.querySelector(".offer__slider"),
         nextSlide = document.querySelector(".offer__slider-next"),

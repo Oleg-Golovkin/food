@@ -1,4 +1,4 @@
-export function Calculator(){
+export default function Calculator(){
         //______________ урок 066. Создаем кулькулятор на сайте____________//.
 
     // Переменная вывода значения кулькулятора

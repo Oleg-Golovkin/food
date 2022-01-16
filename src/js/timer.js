@@ -1,4 +1,4 @@
-export function Timer() {
+export default function Timer() {
      //Timer
 
      const deadline = "2023-03-31";

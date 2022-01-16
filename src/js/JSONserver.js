@@ -1,11 +1,12 @@
-export function JSONserver() {
-    const forms = document.querySelectorAll("form");
-    
-    const statusMassege = {
-        error: "Ошибка",
-        load: "Идет загрузка",
-        ok: "Данные отправлены. Вскоре мы с Вами свяжемся!"
-    };
+export default function JSONserver() {
+    const forms = document.querySelectorAll("form"),
+        modal = document.querySelector("[data-modal]");
+
+        const statusMassege = {
+            error: "Ошибка",
+            load: "Идет загрузка",
+            ok: "Данные отправлены. Вскоре мы с Вами свяжемся!"
+        };
 
     const postForm = async (url, request) => {
         let res = await fetch(url, {
