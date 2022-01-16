@@ -1,4 +1,4 @@
-function Tab() {
+export function Tab() {
     const tabHeaderItems = document.querySelector(".tabheader__items"),
         tabHeaderItem = document.querySelectorAll(".tabheader__item"),
         tabContent = document.querySelectorAll(".tabcontent");
@@ -34,5 +34,3 @@ function Tab() {
         }
     });
 }
-
-module.exports = Tab;

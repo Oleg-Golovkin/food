@@ -1,7 +1,7 @@
-function Timer() {
+export function Timer() {
      //Timer
 
-     const deadline = "2021-03-31";
+     const deadline = "2023-03-31";
      /* везде подставляем вместо 
             аргумента endtime */
  
@@ -88,5 +88,3 @@ function Timer() {
             с присвоением полученного значения кажды раз через секунду */
  
 }
-
-module.exports = Timer;

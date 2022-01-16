@@ -1,4 +1,4 @@
-function Slider() {
+export function Slider() {
     const slide = document.querySelectorAll(".offer__slide"),
         slider = document.querySelector(".offer__slider"),
         nextSlide = document.querySelector(".offer__slider-next"),
@@ -112,8 +112,6 @@ function Slider() {
     });
 
 }
-
-module.exports = Slider;
 
 
 
