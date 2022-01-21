@@ -1,8 +1,8 @@
-export default function Slider() {
-    const slide = document.querySelectorAll(".offer__slide"),
-        slider = document.querySelector(".offer__slider"),
-        nextSlide = document.querySelector(".offer__slider-next"),
-        prevSlide = document.querySelector(".offer__slider-prev"),
+export default function Slider({slideWapper, slideItem, nextSlideItem, prevSlideItem}) {
+    const slide = document.querySelectorAll(slideItem),
+        slider = document.querySelector(slideWapper),
+        nextSlide = document.querySelector(nextSlideItem),
+        prevSlide = document.querySelector(prevSlideItem),
         sliderWrapper2 = document.querySelector(".offer__slider-wrapper-2"),
         sliderWrapper = document.querySelector(".offer__slider-wrapper"),
         total = document.querySelector("#total"),
