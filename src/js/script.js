@@ -23,4 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     KlassES6();
     JSONserver("form");
     Calculator();   
+
+    console.log([1, 2, 3].filter(n => n == 1));
 });
