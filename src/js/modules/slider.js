@@ -1,4 +1,9 @@
-export default function Slider({slideWapper, slideItem, nextSlideItem, prevSlideItem}) {
+export default function Slider({
+    slideWapper,
+    slideItem,
+    nextSlideItem,
+    prevSlideItem
+}) {
     const slide = document.querySelectorAll(slideItem),
         slider = document.querySelector(slideWapper),
         nextSlide = document.querySelector(nextSlideItem),
@@ -29,7 +34,34 @@ export default function Slider({slideWapper, slideItem, nextSlideItem, prevSlide
         current.textContent = slideIndex;
     }
 
+    const cycleSlider = setInterval(sliderInterval, 2000);
+
+    function sliderInterval() {
+        if (offset == offsetSlide(width) * (slide.length - 1)) {
+            offset = 0;
+        } else {
+            offset += offsetSlide(width);
+        }
+        sliderWrapper2.style.transform = `translateX(-${offset}px)`;
+
+        if (slideIndex == slide.length) {
+            slideIndex = 1;
+        } else {
+            slideIndex++;
+        }
+        liArrey.forEach(li => li.style.opacity = "0.5");
+        liArrey[slideIndex - 1].style.opacity = "1";
+
+        if (slide.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+
+
     nextSlide.addEventListener('click', () => {
+        clearInterval(cycleSlider);
         if (offset == offsetSlide(width) * (slide.length - 1)) {
             offset = 0;
         } else {
@@ -54,6 +86,7 @@ export default function Slider({slideWapper, slideItem, nextSlideItem, prevSlide
     });
 
     prevSlide.addEventListener('click', () => {
+        clearInterval(cycleSlider);
         if (offset == 0) {
             offset = offsetSlide(width) * (slide.length - 1);
 
