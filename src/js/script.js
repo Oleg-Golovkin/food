@@ -6,13 +6,13 @@ import Timer from "./modules/timer";
 import Modal from "./modules/modal";
 import KlassES6 from "./modules/klassES6";
 import JSONserver from "./modules/JSONserver";
-import Calculator from "./modules/calculator";   
+import Calculator from "./modules/calculator";
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
     Tab();
-    Slider({                
+    Slider({
         slideItem: ".offer__slide",
         nextSlideItem: ".offer__slider-next",
         prevSlideItem: ".offer__slider-prev",
@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
     Modal();
     KlassES6();
     JSONserver("form");
-    Calculator();   
+    Calculator();
 
-    console.log([1, 2, 3].filter(n => n == 1));
 });
