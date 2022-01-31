@@ -1,8 +1,7 @@
 import {postForm} from "../services/services";
 import {ShowThanksModal} from "./modal";
 export default function JSONserver(formSelektor) {
-    const forms = document.querySelectorAll(formSelektor);
-        
+    const forms = document.querySelectorAll(formSelektor);        
 
         const statusMassege = {
             error: "Ошибка",

@@ -7,9 +7,6 @@ import Modal from "./modules/modal";
 import KlassES6 from "./modules/klassES6";
 import JSONserver from "./modules/JSONserver";
 import Calculator from "./modules/calculator";
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
     Tab();
     Slider({
@@ -23,5 +20,4 @@ document.addEventListener("DOMContentLoaded", () => {
     KlassES6();
     JSONserver("form");
     Calculator();
-
 });
