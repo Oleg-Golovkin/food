@@ -205,5 +205,5 @@ gulp.task('webpack', function () {
 });
 
 // 6. Задача по запуску всех задач одновременно (паралельно).
-gulp.task('default', gulp.parallel('watch', /* 'server', */ 'styles', 'html', 'fonts', 'icons', 'image', 'webpack', "copy-css"));
+gulp.task('default', gulp.parallel('watch', 'server', 'styles', 'html', 'fonts', 'icons', 'image', 'webpack', "copy-css"));
 // Первый параметр - по умолчанию
